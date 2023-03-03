@@ -1,0 +1,92 @@
+{% import './macro2.jinja2' as macro %}
+
+#include "std_common.h"
+#include "std_socket.h"
+#include "{{module}}.h"
+#include "tiny-json.h"
+#include "json-maker.h"
+
+extern {{ module }}_t  *{{ module }};
+std_int_t client_send(std_char_t *remote_ip, std_int_t remote_port, std_char_t * str, std_char_t ** pp_ret);
+
+{% for method in methods -%}
+
+
+{{ macro.declare_var_with_value(type=method.ret.type, ptr_struct=method.ret.ptr_struct)}} RPC_CLIENT_{{instance}}_{{method.name}}(std_char_t *remote_ip, std_int_t remote_port
+    {%- for arg in method.args -%}, {{ macro.declare_var_with_value(type=arg.type, name=arg.name, ptr_struct=arg.ptr_struct) }}{%- endfor -%})
+{
+    json_t const* json;
+    std_char_t request_string[128];
+    std_char_t* dest;
+    json_t const* json_response;
+    json_t const* json_return;
+    json_t const* json_ret_type;
+    {% if method.ret.type != "TYPE_VOID" %}
+        json_t const* json_ret;
+    {% endif %}
+    std_char_t *response = NULL;
+    std_char_t *ret_type;
+
+    {{ macro.declare_var_with_value(type=method.ret.type, name="ret", ptr_struct=method.ret.ptr_struct, dem=";", default_value=True) }}
+
+    dest = json_objOpen( request_string, "request" );
+    dest = json_str(dest, "id", "IID");
+    dest = json_str(dest, "module", "{{module}}");
+    dest = json_str(dest, "method", "{{method.name}}");
+
+    dest = json_objOpen( dest, "params" );
+
+	/*****client_stub_request_body*****/
+    {% for arg in method.args -%}
+        {%- if arg.direction == "IN"               -%}
+            {{ macro.json_object_add(1, "params_object", arg.type, arg.name, arg.ptr_struct, structs=structs, array_length=arg.array_assign ) }}
+        {%- elif type ==  "INOUT"                  -%}
+            {{ macro.json_object_add(1, "params_object", arg.type, arg.name, arg.ptr_struct, structs=structs, array_length=arg.array_assign ) }}
+        {%- endif -%}
+    {%- endfor %}
+
+    dest = json_objClose(dest);
+    dest = json_objClose(dest);
+    json_end(dest);
+
+    //SEND RPC
+    STD_ASSERT_RV_ACT(client_send
+                       (remote_ip, remote_port, request_string,
+                        &response) == STD_RV_SUC, ({{ macro.declare_var_with_value(type=method.ret.type, ptr_struct=method.ret.ptr_struct)}})0,
+                        );
+
+    //PARSE JSON RESPONSE
+    json_t mem[32];
+    json = json_create( response, mem, sizeof mem / sizeof *mem );
+
+    STD_ASSERT_RV(json != NULL, ({{ macro.declare_var_with_value(type=method.ret.type, ptr_struct=method.ret.ptr_struct)}})0);
+
+    json_response = json_getProperty( json, "response" );
+    json_return = json_getProperty( json_response, "return" );
+    json_ret_type = json_getProperty( json_return, "ret_type" );
+    ret_type =  (char *)json_getValue( json_ret_type );
+
+    /****client_stub_response_body****/
+    {% if method.ret.type == "TYPE_PTR_TYPEDEF" %}
+        {{ macro.json_object_get(1, method.ret.type, "ret", "json_ret", method.ret.ptr_struct, structs=structs) }}
+    {% else %}
+        {{ macro.json_object_get(1, method.ret.type, "ret", "json_ret", method.ret.ptr_struct, structs=structs) }}
+    {% endif %}
+
+    {%- for arg in method.args -%}
+        {%- if arg.direction == "OUT"                 -%}
+            {{ macro.json_object_get(1, arg.type, "json_ret", arg.name, arg.ptr_struct, structs=structs, direction="OUT") }}
+        {%- elif arg.direction ==  "INOUT"                  -%}
+            {{ macro.json_object_get(1, arg.type, "json_ret", arg.type, arg.name, arg.ptr_struct, structs=structs, direction="OUT") }}
+        {%- endif -%}
+    {%- endfor %}
+
+    {% if method.ret.type != "TYPE_VOID" %}
+        return ret;
+    {% else %}
+        return;
+    {% endif %}
+}
+
+
+{% endfor %}

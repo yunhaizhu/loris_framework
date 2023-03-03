@@ -1,0 +1,11 @@
+{
+  "name": "mod_lang_parse",
+  "instance": "mod_lang_parse_I",
+  "description": "",
+  "version": "1.0.0",
+  "dependence": {
+  },
+  "interface": [
+    "mod_lang_parse_parse"
+  ]
+}

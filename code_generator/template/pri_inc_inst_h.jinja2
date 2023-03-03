@@ -1,0 +1,43 @@
+{%- import './macro2.jinja2' as macro -%}
+
+{%- macro PRI_INC_INST_H_shell_intf() -%}
+    {%- for method in methods -%}
+        extern STD_CALL std_char_t *shell_stub_{{instance}}_{{method.name}}(IN std_void_t *p_handle, IN std_char_t *params);
+
+{#        extern std_char_t *shell_stub_rpc_{{instance}}_{{method.name}}(IN std_void_t *p_handle, std_char_t *params);#}
+
+    {% endfor %}
+{%- endmacro -%}
+
+{%- macro PRI_INC_INST_H_service_intf() -%}
+    {%- for method in methods -%}
+//extern std_char_t *stub_server_{{instance}}_{{method.name}}(std_char_t *rid, std_char_t *params);
+    {% endfor %}
+{%- endmacro -%}
+
+
+#ifndef {{ instance|upper }}_H
+#define {{ instance|upper }}_H
+
+#include "mod_shell.h"
+#include "{{ module }}.h"
+
+typedef struct {{ module }}_imp_st {
+    mod_ownership_t ownership;
+    std_u64_t unique_id;
+    struct {{ module }}_ops_st *p_ops;
+    mod_shell_t *p_mod_shell;
+} {{ module }}_imp_t;
+
+
+/****shell_interface*****/
+
+{{ PRI_INC_INST_H_shell_intf() }}
+
+/****rpc_service_interface*****/
+
+{#{{ PRI_INC_INST_H_service_intf() }}#}
+
+extern std_int_t {{ instance }}_create_instance(INOUT std_void_t **pp_handle);
+
+#endif

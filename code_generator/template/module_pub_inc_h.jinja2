@@ -1,0 +1,139 @@
+{%- import './macro2.jinja2' as macro -%}
+
+
+{%- macro PUB_INC_H_structs_define() -%}
+    {%- for struct in structs -%}
+        {%- if struct.typedef_name != "" -%}
+            typedef struct {{struct.name}} {
+            {% for field in struct.fields -%}
+                {{ '     ' }}{{ macro.declare_var_with_value(type=field.type, name=field.name,
+                    ptr_struct=field.ptr_struct, dem=";", tb=field.array_assign) }}
+            {% endfor -%}
+            } {{struct.typedef_name}};
+        {% else -%}
+            struct {{struct.name}}{
+            {% for field in struct.fields -%}
+                {{ '     ' }}{{ macro.declare_var_with_value(type=field.type, name=field.name,
+                    ptr_struct=field.ptr_struct, dem=";", tb=field.array_assign) }}
+            {% endfor -%}
+            };
+        {% endif %}
+
+    {% endfor -%}
+{%- endmacro -%}
+
+
+{%- macro PUB_INC_H_macros_define() -%}
+    {%- for define in defines -%}
+        #define {{define.name}} {{define._value}}
+    {% endfor %}
+{%- endmacro -%}
+
+
+{%- macro PUB_INC_H_func_define(rpc) -%}
+    {%- for method in methods -%}
+        {%- if rpc -%}
+            {{ '    ' }}{{  macro.declare_var_with_value(type=method.ret.type, ptr_struct=method.ret.ptr_struct) }} (* rpc_{{ method.name }})(IN {{ module }}_t *m, IN std_char_t *remote_ip, IN std_int_t remote_port
+        {%- else -%}
+            {{ '    ' }}{{  macro.declare_var_with_value(type=method.ret.type, ptr_struct=method.ret.ptr_struct) }} (* {{ method.name }})(IN {{ module }}_t *m
+        {%- endif -%}
+        {%- for arg in method.args -%}
+            ,{{  macro.declare_var_with_value(direction=arg.direction, type=arg.type, name=arg.name,
+                    ptr_struct=arg.ptr_struct) }}
+        {%- endfor -%}
+        );
+    {% endfor -%}
+{%- endmacro -%}
+
+
+{% macro PUB_INC_H_interfaces_define(rpc) %}
+    {%- for method in methods -%}
+
+        {%- if rpc -%}
+            #define{{" "}}rpc_{{module}}_{{method.name}}(m, r, p
+        {%- else -%}
+            #define{{" "}}{{module}}_{{method.name}}(m
+        {%- endif -%}
+
+
+        {%- for arg in method.args -%}
+            , {{arg.name}}
+        {%- endfor -%}
+
+        {%- if rpc -%}
+            ){{" "}}((m)->p_ops->rpc_{{method.name}}(({{module}}_t *)(m), r, p
+        {%- else -%}
+            ){{" "}}((m)->p_ops->{{method.name}}(({{module}}_t *)(m)
+        {%- endif -%}
+
+        {%- for arg in method.args -%}
+            , {{arg.name}}
+        {%- endfor -%}
+        ))
+    {% endfor -%}
+{%- endmacro -%}
+
+
+#ifndef {{module|upper}}_H
+#define {{module|upper}}_H
+
+#include "mod.h"
+#include "mod_ownership.h"
+#include "std_common.h"
+
+/*****************************************************
+ *                                                   *
+ *                      Define                       *
+ *                                                   *
+ ****************************************************/
+
+/***struct_define***/
+{{ PUB_INC_H_structs_define() }}
+
+/***macro_define***/
+{{ PUB_INC_H_macros_define() }}
+
+/****************************************************
+ *                                                  *
+ *                     MOD Define                   *
+ *                                                  *
+ ***************************************************/
+
+typedef struct {{module}}_st{
+    mod_ownership_t ownership;
+    std_u64_t unique_id;
+    struct {{module}}_ops_st *p_ops;
+}{{module}}_t;
+
+struct {{module}}_ops_st{
+    std_int_t	(*init)(IN {{module}}_t *m, IN const std_char_t *arg, IN std_int_t arg_len);
+    std_int_t	(*cleanup)(IN {{module}}_t *m);
+
+    /***func_define***/
+{{ PUB_INC_H_func_define(rpc=False) }}
+{#{{ PUB_INC_H_func_define(rpc=True) }}#}
+};
+
+/***************************************************
+ *                                                 *
+ *                     Global Variable             *
+ *                                                 *
+ **************************************************/
+
+#define {{module|upper}}_IID MOD_GUID({{IID}})
+
+
+/***************************************************
+ *                                                 *
+ *                     Interface Function          *
+ *                                                 *
+ **************************************************/
+
+#define {{module}}_init(m, arg, arg_len) ((m)->p_ops->init(({{module}}_t *)(m), arg, arg_len))
+#define {{module}}_cleanup(m) ((m)->p_ops->cleanup(({{module}}_t *)(m)))
+
+/***interface_define***/
+{{ PUB_INC_H_interfaces_define(rpc=False) }}
+{#{{ PUB_INC_H_interfaces_define(rpc=True) }}#}
+
+#endif

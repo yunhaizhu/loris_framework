@@ -1,0 +1,177 @@
+{%- import './macro2.jinja2' as macro -%}
+
+{%- macro PRI_SRC_INST_C_shell_register() -%}
+    {%- for method in methods -%}
+        snprintf(key, sizeof(key), "%lul-%s", p_imp_m->unique_id, "{{module}}_{{method.name}}");
+        mod_shell_register(p_imp_m->p_mod_shell, key, std_safe_strlen(key, sizeof(key)), shell_stub_{{instance}}_{{method.name}}, p_imp_m);
+
+{#        snprintf(key, sizeof(key), "%lul-%s", p_imp_m->unique_id, "rpc_{{module}}_{{method.name}}");#}
+{#        mod_shell_register(p_imp_m->p_mod_shell, key, std_safe_strlen(key, sizeof(key)), shell_stub_rpc_{{instance}}_{{method.name}}, p_imp_m);#}
+
+    {% endfor %}
+{%- endmacro -%}
+
+
+{%- macro PRI_SRC_INST_C_shell_unregister() -%}
+    {%- for method in methods -%}
+        snprintf(key, sizeof(key), "%lul-%s", p_imp_m->unique_id, "{{module}}_{{method.name}}");
+        mod_shell_unregister(p_imp_m->p_mod_shell, key, std_safe_strlen(key, sizeof(key)));
+
+{#        snprintf(key, sizeof(key), "%lul-%s", p_imp_m->unique_id, "rpc_{{module}}_{{method.name}}");#}
+{#        mod_shell_unregister(p_imp_m->p_mod_shell, key, std_safe_strlen(key, sizeof(key)));#}
+
+    {% endfor %}
+{%- endmacro -%}
+
+
+{%- macro PRI_SRC_INST_C_shell_test_unregister() -%}
+    {%- for method in methods_test -%}
+        snprintf(key, sizeof(key), "%lul-%s", p_imp_m->unique_id, "{{module}}_{{method.name}}");
+        mod_shell_unregister(p_imp_m->p_mod_shell, key, std_safe_strlen(key, sizeof(key)));
+
+{#        snprintf(key, sizeof(key), "%lul-%s", p_imp_m->unique_id, "rpc_{{module}}_{{method.name}}");#}
+{#        mod_shell_unregister(p_imp_m->p_mod_shell, key, std_safe_strlen(key, sizeof(key)));#}
+
+    {% endfor %}
+{%- endmacro -%}
+
+
+{%- macro PRI_SRC_BUNDLE_C_rpc_service_register() -%}
+    {%- for method in methods -%}
+{{ '    ' }}mod_rpc_service_register(p_mod_rpc_service, "{{module}}_{{method.name}}", stub_server_{{instance}}_{{method.name}});
+    {% endfor -%}
+{%- endmacro -%}
+
+
+{#    /****rpc_service_register******/#}
+{#{{ PRI_SRC_BUNDLE_C_rpc_service_register() }}#}
+
+
+{%- macro PRI_SRC_BUNDLE_C_rpc_call_service_intf() -%}
+    {%- for method in methods -%}
+        {{ macro.declare_var_with_value(type=method.ret.type, ptr_struct=method.ret.ptr_struct) }} RPC_CLIENT_{{instance}}_{{method.name}}(std_char_t *remote_ip, std_int_t remote_port
+        {%- for arg in method.args -%}
+            , {{ macro.declare_var_with_value(type=arg.type, name=arg.name, ptr_struct=arg.ptr_struct) }}
+        {%- endfor -%});
+    {% endfor %}
+{%- endmacro -%}
+
+
+{%- macro PRI_SRC_INST_C_func_implemation() -%}
+    {%- for method in methods -%}
+STD_CALL {{ macro.declare_var_with_value(type=method.ret.type, ptr_struct=method.ret.ptr_struct) }} {{instance}}_{{method.name}}(IN {{module}}_t *p_m
+        {%- for arg in method.args -%}
+            , {{ macro.declare_var_with_value(direction=arg.direction, type=arg.type, name=arg.name, ptr_struct=arg.ptr_struct) }}
+        {%- endfor -%})
+{
+    {{ macro.return_value(method.ret.type) }}
+}
+
+    {% endfor %}
+{%- endmacro -%}
+
+
+{% macro PRI_SRC_INST_C_RPC_func_implemation() %}
+    {%- for method in methods -%}
+STD_CALL {{ macro.declare_var_with_value(type=method.ret.type, ptr_struct=method.ret.ptr_struct) }} {{instance}}_rpc_{{method.name}}({{module}}_t *p_m, std_char_t *remote_ip, std_int_t remote_port
+        {%- for arg in method.args -%}
+            , {{ macro.declare_var_with_value(type=arg.type, name=arg.name, ptr_struct=arg.ptr_struct) }}
+        {%- endfor -%})
+{
+    return RPC_CLIENT_{{instance}}_{{method.name}}(remote_ip, remote_port
+        {%- for arg in method.args -%}
+            , {{arg.name}}
+        {%- endfor -%});
+}
+
+    {% endfor %}
+{%- endmacro -%}
+
+
+{%- macro PRI_SRC_INST_C_func_ops() -%}
+    {%- for method in methods -%}
+{{ '    ' }}{{instance}}_{{method.name}},
+    {% endfor %}
+{%- endmacro -%}
+
+
+{%- macro PRI_SRC_INST_C_RPC_func_ops() -%}
+    {%- for method in methods -%}
+        {%- if loop.last -%}
+{{ '    ' }}{{instance}}_rpc_{{method.name}}
+        {%- else -%}
+{{ '    ' }}{{instance}}_rpc_{{method.name}},
+        {% endif %}
+    {% endfor %}
+{%- endmacro %}
+
+
+#include "{{instance}}.h"
+
+
+{#{{ PRI_SRC_BUNDLE_C_rpc_call_service_intf() }}#}
+
+STD_CALL std_rv_t  {{instance}}_init(IN {{module}}_t *p_m, IN const std_char_t *arg, IN std_int_t arg_len)
+{
+    {{module}}_imp_t *p_imp_m = ({{module}}_imp_t *) p_m;
+    mod_iid_t mod_shell_iid = MOD_SHELL_IID;
+    std_char_t key[BUF_SIZE_128] = "\0";
+
+    mod_create_instance(&mod_shell_iid, (std_void_t **) &p_imp_m->p_mod_shell, (mod_ownership_t *) p_imp_m);
+
+    mod_shell_init(p_imp_m->p_mod_shell, NULL, 0);
+
+    /****shell_register******/
+
+    {{ PRI_SRC_INST_C_shell_register() }}
+
+	return STD_RV_SUC;
+}
+
+STD_CALL std_rv_t {{instance}}_cleanup({{module}}_t *p_m)
+{
+    {{module}}_imp_t *p_imp_m = ({{module}}_imp_t *) p_m;
+    mod_iid_t mod_shell_iid = MOD_SHELL_IID;
+    std_char_t key[BUF_SIZE_128] = "\0";
+
+    /****shell_unregister******/
+
+    {{ PRI_SRC_INST_C_shell_unregister() }}
+
+    mod_shell_cleanup(p_imp_m->p_mod_shell);
+
+    mod_delete_instance(&mod_shell_iid, (std_void_t **) &p_imp_m->p_mod_shell, (mod_ownership_t *) p_imp_m);
+
+	return STD_RV_SUC;
+}
+
+
+/***func_implementation***/
+
+{{ PRI_SRC_INST_C_func_implemation() }}
+{#{{ PRI_SRC_INST_C_RPC_func_implemation() }}#}
+
+struct {{module}}_ops_st {{instance}}_ops = {
+    {{instance}}_init,
+    {{instance}}_cleanup,
+
+    /***func_ops***/
+    {{ PRI_SRC_INST_C_func_ops() }}
+{#    {{ PRI_SRC_INST_C_RPC_func_ops() }}#}
+};
+
+STD_CALL std_rv_t {{instance}}_create_instance(INOUT std_void_t **pp_handle)
+{
+    {{module}}_imp_t *p_m = NULL;
+
+    p_m = ({{module}}_imp_t *) CALLOC(1, sizeof({{module}}_imp_t));
+    p_m->unique_id = std_random_u64();
+    p_m->p_ops = &{{instance}}_ops;
+
+    mod_ownership_register_ops((mod_ownership_t *) p_m);
+    mod_ownership_init((mod_ownership_t *) p_m);
+    *pp_handle = p_m;
+
+    return STD_RV_SUC;
+}
+

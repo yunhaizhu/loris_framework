@@ -1,0 +1,11 @@
+#define VERSION "1.0.0"
+#define MODULE "mod_lang_compile"
+#define INSTANCE "mod_lang_compile_I"
+
+typedef struct lang_ast_s {
+} lang_ast_t;
+
+std_void_t func(IN lang_ast_t *func_id, IN lang_ast_t *func_params, IN lang_ast_t *func_body);
+std_void_t cmd(IN lang_ast_t *cmd);
+std_void_t expr(IN lang_ast_t *cmd);
+std_char_t *generated_bytecode(IN std_char_t *file_name);

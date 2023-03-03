@@ -1,0 +1,75 @@
+{% import './macro2.jinja2' as macro %}
+
+
+#include "std_common.h"
+#include "tiny-json.h"
+#include "json-maker.h"
+#include "{{module}}.h"
+
+extern {{ module }}_t  *{{ module }};
+
+{% for method in methods -%}
+
+std_char_t *stub_server_{{instance}}_{{method.name}}(std_char_t *rid, std_char_t *params)
+{
+    json_t const *json;
+    std_char_t response_string[128];
+    std_char_t *response;
+    std_char_t *dest;
+
+	/****server_stub_args_def****/
+
+    {{ macro.declare_var_with_value(type=method.ret.type, name="ret", ptr_struct=method.ret.ptr_struct, dem=";", default_value=True)}}
+
+    {%- for arg in method.args -%}
+        {{ macro.declare_var_with_value(type=arg.type, name=arg.name, ptr_struct=arg.ptr_struct, dem=";")}}
+    {%- endfor %}
+
+	/*****server_stub_args_body*****/
+    json_t mem[32];
+    json = json_create( params, mem, sizeof mem / sizeof *mem );
+    STD_ASSERT_RV(json != NULL, NULL);
+
+	{% for arg in method.args -%}
+        {%- if loop.first -%}
+            json_t const*  param_obj = NULL;
+        {%- endif -%}
+        {%- if arg.direction == "IN"                -%}
+            {{ macro.json_object_get(1, type=arg.type, name=arg.name, object="param_obj", ptr_struct=arg.ptr_struct, structs=structs, direction="IN") }}
+        {%- elif arg.direction ==  "INOUT"                  -%}
+            {{ macro.json_object_get(1, type=arg.type, name=arg.name, object="param_obj", ptr_struct=arg.ptr_struct, structs=structs, direction="IN") }}
+        {%- endif -%}
+    {%- endfor %}
+
+	/******server_stub_call*****/
+    {{ macro.func_call("ret", method, method.ret.type, module) }}
+
+
+    dest = json_objOpen( response_string, NULL );
+    dest = json_objOpen( dest, "response" );
+    dest = json_objOpen( dest, "return" );
+
+ 	/******server_stub_ret******/
+    {{ macro.json_object_add(1, "return_object", method.ret.type, "ret", method.ret.ptr_struct, structs=structs) }}
+
+    {%- for arg in method.args -%}
+        {%- if arg.direction == "OUT"                 -%}
+            {{ macro.json_object_add(1, "return_object", arg.type, arg.name, arg.ptr_struct, structs=structs, array_length=arg.array_assign ) }}
+        {%- elif type ==  "INOUT"                  -%}
+            {{ macro.json_object_add(1, "return_object", arg.type, arg.name, arg.ptr_struct, structs=structs, array_length=arg.array_assign ) }}
+        {%- endif -%}
+    {%- endfor %}
+
+    dest = json_objClose( dest );
+    dest = json_objClose( dest );
+    dest = json_objClose( dest );
+    json_end( dest );
+
+    response = strdup(response_string);
+
+	return response;
+}
+
+{% endfor %}
+
+
