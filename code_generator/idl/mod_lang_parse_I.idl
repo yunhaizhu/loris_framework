@@ -1,0 +1,5 @@
+#define VERSION "1.0.0"
+#define MODULE "mod_lang_parse"
+#define INSTANCE "mod_lang_parse_I"
+
+std_rv_t parse(IN std_char_t *file_name, IN std_char_t *source_buffer, IN std_int_t source_buffer_len);

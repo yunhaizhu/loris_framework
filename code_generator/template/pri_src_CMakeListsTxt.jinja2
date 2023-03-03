@@ -1,0 +1,21 @@
+add_library({{instance}} SHARED
+        ${CMAKE_CURRENT_SOURCE_DIR}/private/src/{{instance}}.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/private/src/{{instance}}_bundle.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/private/src/stub/stub_shell_{{instance}}.c
+        )
+
+target_include_directories({{instance}} PRIVATE
+        ${SUB_PUBLIC_INCLUDE_DIRS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/private/include)
+
+target_link_libraries({{instance}} PRIVATE pthread ${LINK_PROFILER})
+
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/private/script/{{instance}}_test.nl
+        DESTINATION ${loris_vm_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/script/ )
+
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/public/desc.json
+        DESTINATION ${loris_vm_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/bundle/{{instance}}/ )
+
+INSTALL(TARGETS {{instance}}
+        DESTINATION ${loris_vm_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/bundle/{{instance}}/ )
+

@@ -1,0 +1,13 @@
+{
+  "name": "mod_lang_vm",
+  "instance": "mod_lang_vm_I",
+  "description": "",
+  "version": "1.0.0",
+  "dependence": {
+  },
+  "interface": [
+    "mod_lang_vm_run_init",
+    "mod_lang_vm_run_execute",
+    "mod_lang_vm_run_cleanup"
+  ]
+}

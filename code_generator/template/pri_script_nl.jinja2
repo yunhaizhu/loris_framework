@@ -1,0 +1,162 @@
+{%- macro func_implementation() -%}
+    {%- for method in methods -%}
+
+def {{ module }}_{{method.name}}(var root
+                                 {%- for arg in method.args -%}
+                                 , var {{ arg.name }}
+                                 {%- endfor -%}
+                                 , var ret)
+{
+    var name_value_hash<> = <{%- for arg in method.args -%}
+                            {%- if loop.last -%}
+                               "{{ arg.name }}":{{ arg.name }}
+                            {%- else -%}
+                                "{{ arg.name }}":{{ arg.name }},
+                            {%- endif -%}
+                         {%- endfor -%}>
+    var json_args
+
+    json_args = make_json(name_value_hash)
+
+    ret = run("{{ module }}_{{method.name}}", root, json_args)
+}
+
+
+    {% endfor %}
+{%- endmacro -%}
+
+
+{%- macro run_check_implementation(method) -%}
+def run_check(var root, var run_state)
+{
+    var check_key
+    var ret_check
+    var keys_tuple
+    var keys_count
+    var idx
+    {% for arg in method.args %}
+    var {{ arg.name }}
+    {% endfor %}
+
+    keys_tuple = run_state.find("keys_tuple")
+
+    keys_count = keys_tuple.count()
+    print("keys_count:", keys_count)
+
+    if (keys_count == 0){
+        print("CHECK IGNORED")
+        return
+    }
+
+    idx = random_number(32) % keys_count
+    check_key = keys_tuple{idx}
+
+    {% for arg in method.args %}
+    {{ arg.name }} = check_key
+    {% endfor %}
+
+    {{ module }}_check(root, {%- for arg in method.args -%}
+                             {{ arg.name }},
+                            {%- endfor -%} ret_check)
+
+    assert(ret_check == 1, "ret_check == 1")
+}
+{%- endmacro -%}
+
+
+{%- macro run_add_implementation(method) -%}
+def run_add(var root, var run_state)
+{
+    {% for arg in method.args %}
+    var {{ arg.name }}
+    {% endfor %}
+    var ret_add
+    var keys_tuple
+    var keys_count
+    var key_add = random_number(64)
+
+    keys_tuple = run_state.find("keys_tuple")
+
+    {% for arg in method.args %}
+    {{ arg.name }} = key_add
+    {% endfor %}
+
+    {{ module }}_add(root, {%- for arg in method.args -%}
+                             {{ arg.name }},
+                           {%- endfor -%} ret_add)
+    assert(ret_add == 0, "ret_add == STD_RV_SUC")
+
+    keys_tuple.add(key_add)
+}
+{%- endmacro -%}
+
+{%- macro run_implementation(func, method) -%}
+def run_{{ func }}(var root, var run_state)
+{
+    {% for arg in method.args %}
+    var {{ arg.name }}
+    {% endfor %}
+    var ret_{{ func }}
+    var keys_tuple = run_state.find("keys_tuple")
+    var hash_key_value = run_state.find("hash_key_value")
+
+    {{ module }}_{{ func }}(root, {%- for arg in method.args -%}
+                             {{ arg.name }},
+                           {%- endfor -%} ret_{{ func }})
+}
+{%- endmacro -%}
+
+{{ func_implementation() }}
+
+{%- for method in methods -%}
+    {% if method.name == 'check' %}
+{{ run_check_implementation (method=method) }}
+
+    {% elif method.name == 'add'  %}
+{{ run_add_implementation (method=method) }}
+
+    {% else  %}
+{{ run_implementation (method.name, method=method) }}
+
+    {% endif %}
+{% endfor %}
+
+def main()
+{
+    var {{ module }}_test
+    var iid = "{{IID}}"
+    var args = "{}"
+    var keys_tuple{} = {}
+    var hash_key_value<> = <>
+	var run_state<> = <"keys_tuple": keys_tuple, "hash_key_value":hash_key_value>
+    var i
+    var run_max = 1000
+
+    debug("ERR")
+
+    {{ module }}_test = create_instance(iid, args)
+    print("{{ module }}_test:", {{ module }}_test)
+
+{% for method in methods %}
+    run_{{method.name}}({{ module }}_test, run_state)
+
+{% endfor %}
+
+    for (i = 0, i < run_max, i += 1) {
+        var k
+        var run_random
+
+        run_random = random_number(32)
+        k = run_random % {{methods|length}}
+
+    {% for method in methods %}
+        if ( k == {{loop.index0}}) {
+            run_{{method.name}}({{ module }}_test, run_state)
+        }
+
+    {% endfor %}
+    }
+
+    delete_instance(iid, {{ module }}_test)
+}
+

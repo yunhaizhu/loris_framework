@@ -1,0 +1,615 @@
+{% macro declare_var_with_value(direction, type, name, ptr_struct, dem, tb, env_value, default_value) %}
+    {% if type == "TYPE_VOID"                 %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+        {% elif env_value %}
+            std_void_t {{ name }} {{ dem }}
+        {% else %}
+            std_void_t {{ name }} {{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_CHAR"              %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_char_t {{  name }} = '\0' {{ dem }}
+        {% elif env_value %}
+            std_char_t {{  name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            std_char_t {{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_UCHAR"             %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_uchar_t {{  name }} = '\0' {{ dem }}
+        {% elif env_value %}
+            std_uchar_t {{  name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            std_uchar_t {{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_INT"               %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_int_t {{  name }} = 0 {{ dem }}
+        {% elif env_value %}
+            std_int_t {{  name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            std_int_t {{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_UINT"              %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_uint_t {{  name }} = 0 {{ dem }}
+        {% elif env_value %}
+            std_uint_t {{  name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            std_uint_t {{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_SHORT"             %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_16_t {{  name }} = 0 {{ dem }}
+        {% elif env_value %}
+            std_16_t {{  name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            std_16_t {{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_USHORT"            %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_u16_t {{  name }} = 0 {{ dem }}
+        {% elif env_value %}
+            std_u16_t {{  name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            std_u16_t {{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_64"                %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_64_t {{  name }} = 0 {{ dem }}
+        {% elif env_value %}
+            std_64_t {{  name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            std_64_t {{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_U64"               %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_u64_t {{  name }} = 0 {{ dem }}
+        {% elif env_value %}
+            std_u64_t {{  name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            std_u64_t {{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_128"                %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_128_t {{  name }} = 0 {{ dem }}
+        {% elif env_value %}
+            std_128_t {{  name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            std_128_t {{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_U128"               %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_u128_t {{  name }} = 0 {{ dem }}
+        {% elif env_value %}
+            std_u128_t {{  name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            std_u128_t {{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_ARRAY_CHAR"        %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_char_t {{  name }}[{{ tb }}] = {} {{ dem }}
+        {% elif env_value %}
+            std_char_t {{  name }}[{{ tb }}] = {{ env_value }}{{  dem }}
+        {% else %}
+            std_char_t  {{ name }}[{{ tb }}]{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_ARRAY_UCHAR"       %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_uchar_t {{  name }}[{{ tb }}] = {} {{ dem }}
+        {% elif env_value %}
+            std_uchar_t {{  name }}[{{ tb }}] = {{ env_value }}{{  dem }}
+        {% else %}
+            std_uchar_t {{ name }}[{{ tb }}]{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_ARRAY_INT"         %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_int_t {{  name }}[{{ tb }}] = {} {{ dem }}
+        {% elif env_value %}
+            std_int_t {{  name }}[{{ tb }}] = {{ env_value }}{{  dem }}
+        {% else %}
+            std_int_t {{ name }}[{{ tb }}]{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_ARRAY_UINT"        %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_uint_t {{  name }}[{{ tb }}] = {} {{ dem }}
+        {% elif env_value %}
+            std_uint_t {{  name }}[{{ tb }}] = {{ env_value }}{{  dem }}
+        {% else %}
+            std_uint_t {{ name }}[{{ tb }}]{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_ARRAY_VOID"        %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_void_t {{  name }}[{{ tb }}] = {} {{ dem }}
+        {% elif env_value %}
+            std_void_t {{  name }}[{{ tb }}] = {{ env_value }}{{  dem }}
+        {% else %}
+            std_void_t {{ name }}[{{ tb }}]{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_ARRAY_STRUCT"      %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            struct {{ ptr_struct }} {{ name }}[{{ tb }}] = {} {{ dem }}
+        {% elif env_value %}
+            struct {{ ptr_struct }} {{ name }}[{{ tb }}] = {{ env_value }}{{  dem }}
+        {% else %}
+            struct {{ ptr_struct }} {{ name }}[{{ tb }}]{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_ARRAY_TYPEDEF"     %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            {{ ptr_struct }} {{ name }}[{{ tb }}] = {} {{ dem }}
+        {% elif env_value %}
+            {{ ptr_struct }} {{ name }}[{{ tb }}] = {{ env_value }}{{  dem }}
+        {% else %}
+            {{ ptr_struct }} {{ name }}[{{ tb }}]{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_PTR_CHAR"          %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_char_t  *{{ name }} = NULL {{ dem }}
+        {% elif env_value %}
+            std_char_t  *{{ name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            std_char_t  *{{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_PTR_UCHAR"         %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_uchar_t *{{ name }} = NULL {{ dem }}
+        {% elif env_value %}
+            std_uchar_t *{{ name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            std_uchar_t *{{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_PTR_INT"           %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_int_t *{{ name }} = NULL {{ dem }}
+        {% elif env_value %}
+            std_int_t *{{ name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            std_int_t *{{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_PTR_UINT"          %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_uint_t *{{ name }} = NULL {{ dem }}
+        {% elif env_value %}
+            std_uint_t *{{ name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            std_uint_t *{{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_PTR_VOID"          %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_void_t  *{{ name }} = NULL {{ dem }}
+        {% elif env_value %}
+            std_void_t  *{{ name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            std_void_t  *{{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_PTR_SEM"          %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_sem_t  *{{ name }} = NULL {{ dem }}
+        {% elif env_value %}
+            std_sem_t  *{{ name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            std_sem_t  *{{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_PTR_STRUCT"        %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            struct {{ ptr_struct }} *{{ name }} = NULL {{ dem }}
+        {% elif env_value %}
+            struct {{ ptr_struct }} *{{ name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            struct {{ ptr_struct }} *{{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_PTR_TYPEDEF"       %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            {{ ptr_struct }} *{{ name }} = NULL {{ dem }}
+        {% elif env_value %}
+            {{ ptr_struct }} *{{ name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            {{ ptr_struct }} *{{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_PTR_PTR_TYPEDEF"       %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            {{ ptr_struct }} **{{ name }} = NULL {{ dem }}
+        {% elif env_value %}
+            {{ ptr_struct }} **{{ name }} = {{ env_value }}{{  dem }}
+        {% else %}
+            {{ ptr_struct }} **{{ name }}{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_PTR_ARRAY_CHAR"    %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_char_t {{ name }}[{{ tb }}] = {} {{ dem }}
+        {% elif env_value %}
+            std_char_t {{ name }}[{{ tb }}] = {{ env_value }}{{  dem }}
+        {% else %}
+            std_char_t {{ name }}[{{ tb }}]{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_PTR_ARRAY_UCHAR"   %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_uchar_t {{ name }}[{{ tb }}] = {} {{ dem }}
+        {% elif env_value %}
+            std_uchar_t {{ name }}[{{ tb }}] = {{ env_value }}{{  dem }}
+        {% else %}
+            std_uchar_t {{ name }}[{{ tb }}]{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_PTR_ARRAY_INT"     %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_int_t {{ name }}[{{ tb }}] = {} {{ dem }}
+        {% elif env_value %}
+            std_int_t {{ name }}[{{ tb }}] = {{ env_value }}{{  dem }}
+        {% else %}
+            std_int_t {{ name }}[{{ tb }}]{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_PTR_ARRAY_UINT"    %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_uint_t {{ name }}[{{ tb }}] = {} {{ dem }}
+        {% elif env_value %}
+            std_uint_t {{ name }}[{{ tb }}] = {{ env_value }}{{  dem }}
+        {% else %}
+            std_uint_t {{ name }}[{{ tb }}]{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_PTR_ARRAY_VOID"    %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            std_void_t {{ name }}[{{ tb }}] {{ dem }}
+        {% elif env_value %}
+            std_void_t {{ name }}[{{ tb }}] {{  dem }}
+        {% else %}
+            std_void_t {{ name }}[{{ tb }}] {{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_PTR_ARRAY_STRUCT"  %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            struct {{ ptr_struct }} {{ name }}[{{ tb }}] = {} {{ dem }}
+        {% elif env_value %}
+            struct {{ ptr_struct }} {{ name }}[{{ tb }}] = {{ env_value }}{{  dem }}
+        {% else %}
+            struct {{ ptr_struct }} {{ name }}[{{ tb }}]{{ dem }}
+        {%- endif %}
+    {% elif type ==  "TYPE_PTR_ARRAY_TYPEDEF" %}
+        {% if direction %}
+            {{ '' }} {{ direction }} {{ '' }}
+        {%- endif %}
+        {% if default_value %}
+            {{ ptr_struct }} {{ name }}[{{ tb }}] = {} {{ dem }}
+        {% elif env_value %}
+            {{ ptr_struct }} {{ name }}[{{ tb }}] = {{ env_value }}{{  dem }}
+        {% else %}
+            {{ ptr_struct }} {{ name }}[{{ tb }}]{{ dem }}
+        {%- endif -%}
+    {%- endif -%}
+{%- endmacro -%}
+
+
+{% macro return_value(type) %}
+    {% if type == "TYPE_CHAR"                 %}  return 0;
+    {% elif type ==  "TYPE_UCHAR"             %}  return 0;
+    {% elif type ==  "TYPE_INT"               %}  return 0;
+    {% elif type ==  "TYPE_UINT"              %}  return 0;
+    {% elif type ==  "TYPE_VOID"              %}  return ;
+    {% elif type ==  "TYPE_SHORT"             %}  return 0;
+    {% elif type ==  "TYPE_USHORT"            %}  return 0;
+    {% elif type ==  "TYPE_64"                %}  return 0;
+    {% elif type ==  "TYPE_U64"               %}  return 0;
+    {% elif type ==  "TYPE_128"               %}  return 0;
+    {% elif type ==  "TYPE_U128"              %}  return 0;
+    {% elif type ==  "TYPE_ARRAY_CHAR"        %}  return 0;
+    {% elif type ==  "TYPE_ARRAY_UCHAR"       %}  return 0;
+    {% elif type ==  "TYPE_ARRAY_INT"         %}  return 0;
+    {% elif type ==  "TYPE_ARRAY_UINT"        %}  return 0;
+    {% elif type ==  "TYPE_ARRAY_VOID"        %}  return 0;
+    {% elif type ==  "TYPE_ARRAY_STRUCT"      %}  return 0;
+    {% elif type ==  "TYPE_ARRAY_TYPEDEF"     %}  return 0;
+    {% elif type ==  "TYPE_PTR_CHAR"          %}  return NULL;
+    {% elif type ==  "TYPE_PTR_UCHAR"         %}  return NULL;
+    {% elif type ==  "TYPE_PTR_INT"           %}  return NULL;
+    {% elif type ==  "TYPE_PTR_UINT"          %}  return NULL;
+    {% elif type ==  "TYPE_PTR_VOID"          %}  return NULL;
+    {% elif type ==  "TYPE_PTR_STRUCT"        %}  return NULL;
+    {% elif type ==  "TYPE_PTR_TYPEDEF"       %}  return NULL;
+    {% elif type ==  "TYPE_PTR_PTR_TYPEDEF"   %}  return NULL;
+    {% elif type ==  "TYPE_PTR_ARRAY_CHAR"    %}  return NULL;
+    {% elif type ==  "TYPE_PTR_ARRAY_UCHAR"   %}  return NULL;
+    {% elif type ==  "TYPE_PTR_ARRAY_INT"     %}  return NULL;
+    {% elif type ==  "TYPE_PTR_ARRAY_UINT"    %}  return NULL;
+    {% elif type ==  "TYPE_PTR_ARRAY_VOID"    %}  return NULL;
+    {% elif type ==  "TYPE_PTR_ARRAY_STRUCT"  %}  return NULL;
+    {% elif type ==  "TYPE_PTR_ARRAY_TYPEDEF" %}  return NULL;
+    {% endif %}
+{% endmacro %}
+
+
+{% macro block_json_object_get(tab, type, name, object, field, sub_field, idx, type_cast) %}
+{{ object }} = json_getProperty( json, "{{ name }}" );
+
+    {% if tab == 1 %}
+        {{name}}
+    {% elif tab == 2 %}
+        {% if idx %}
+            {{name}}[{{idx}}].{{field}}
+        {% else %}
+            {{name}}->{{field}}
+        {% endif %}
+    {% elif tab == 3 %}
+        {%if idx  %}
+            {%if sub_field  %}
+                {{name}}->{{field}}[{{idx}}].{{sub_field}}
+            {% else %}
+                {{name}}->{{field}}[{{idx}}]
+            {% endif %}
+        {% else %}
+            {{name}}->{{field}}->{{sub_field}}
+        {% endif %}
+    {% endif %}
+    {% if type_cast %}
+    = ({{type_cast}} )json_get{{type}}({{object}});
+    {% else %}
+    = json_get{{type}}({{object}});
+    {% endif %}
+{% endmacro %}
+
+
+
+
+{% macro json_object_get(tab, type, name, object, ptr_struct, field, sub_field, idx, structs, direction) %}
+    {% if type == "TYPE_CHAR"                 %} {{ block_json_object_get(tab, "Integer", name, object, field, sub_field, idx, "std_char_t ")}}
+    {% elif type ==  "TYPE_UCHAR"             %} {{ block_json_object_get(tab, "Integer", name, object, field, sub_field, idx, "std_uchar_t ")}}
+    {% elif type ==  "TYPE_INT"               %} {{ block_json_object_get(tab, "Integer", name, object, field, sub_field, idx, "std_int_t")}}
+    {% elif type ==  "TYPE_UINT"              %} {{ block_json_object_get(tab, "Integer", name, object, field, sub_field, idx, "std_uint_t")}}
+    {% elif type ==  "TYPE_VOID"              %}
+    {% elif type ==  "TYPE_SHORT"             %} {{ block_json_object_get(tab, "Integer", name, object, field, sub_field, idx, "std_short_t")}}
+    {% elif type ==  "TYPE_USHORT"            %} {{ block_json_object_get(tab, "Integer", name, object, field, sub_field, idx, "std_ushort_t")}}
+    {% elif type ==  "TYPE_ARRAY_CHAR"        %}
+    {% elif type ==  "TYPE_ARRAY_UCHAR"       %}
+    {% elif type ==  "TYPE_ARRAY_INT"         %}
+    {% elif type ==  "TYPE_ARRAY_UINT"        %}
+    {% elif type ==  "TYPE_ARRAY_VOID"        %}
+    {% elif type ==  "TYPE_ARRAY_STRUCT"      %}
+    {% elif type ==  "TYPE_ARRAY_TYPEDEF"     %}
+    {% elif type ==  "TYPE_PTR_CHAR"          %} {{ block_json_object_get(tab, "Value", name, object, field, sub_field, idx, "std_char_t *")}}
+    {% elif type ==  "TYPE_PTR_UCHAR"         %} {{ block_json_object_get(tab, "Value", name, object, field, sub_field, idx, "std_uchar_t *")}}
+    {% elif type ==  "TYPE_PTR_INT"           %} {{ block_json_object_get(tab, "UInteger", name, object, field, sub_field, idx, "std_int_t *")}}
+    {% elif type ==  "TYPE_PTR_UINT"          %} {{ block_json_object_get(tab, "UInteger", name, object, field, sub_field, idx, "std_uint_t *")}}
+    {% elif type ==  "TYPE_PTR_VOID"          %} {{ block_json_object_get(tab, "UInteger", name, object, field, sub_field, idx, "std_void_t *")}}
+    {% elif type ==  "TYPE_PTR_STRUCT"        %}
+    {% elif type ==  "TYPE_PTR_TYPEDEF"       %} {{ block_json_object_get(tab, "Integer", name, object, field, sub_field, idx, ptr_struct + " *")}}
+    {% elif type ==  "TYPE_PTR_PTR_TYPEDEF"   %} {{ block_json_object_get(tab, "Integer", name, object, field, sub_field, idx, ptr_struct + " **")}}
+    {% elif type ==  "TYPE_64"                %} {{ block_json_object_get(tab, "Integer", name, object, field, sub_field, idx, "std_64_t")}}
+    {% elif type ==  "TYPE_U64"               %} {{ block_json_object_get(tab, "UInteger", name, object, field, sub_field, idx, )}}
+    {% elif type ==  "TYPE_128"               %}
+    {% elif type ==  "TYPE_U128"              %}
+    {% elif type ==  "TYPE_PTR_ARRAY_CHAR"    %}
+    {% elif type ==  "TYPE_PTR_ARRAY_UCHAR"   %}
+    {% elif type ==  "TYPE_PTR_ARRAY_INT"     %}
+    {% elif type ==  "TYPE_PTR_ARRAY_UINT"    %}
+    {% elif type ==  "TYPE_PTR_ARRAY_VOID"    %}
+    {% elif type ==  "TYPE_PTR_ARRAY_STRUCT"  %}
+    {% elif type ==  "TYPE_PTR_ARRAY_TYPEDEF" %}
+    {% endif %}
+{% endmacro %}
+
+
+{% macro block_json_object_add(type, tab, return_object, key, field, sub_field, idx) %}
+    {% if type == "string" %}
+        dest = json_str(dest, "ret_type", "STRING_OP");
+        {% set type="str" %}
+        {% set typecast="(const char *)" %}
+    {% elif type == "void" %}
+        dest = json_str(dest, "ret_type", "VOID");
+        {% set type="" %}
+        {% set typecast="" %}
+    {% elif type == "int" %}
+        dest = json_str(dest, "ret_type", "INTEGER");
+        {% set type="verylong" %}
+        {% set typecast="" %}
+    {% elif type == "address" %}
+        dest = json_str(dest, "ret_type", "ADDRESS_OP");
+        {% set type="verylong" %}
+        {% set typecast="(intptr_t)" %}
+    {%else %}
+        dest = json_str(dest, "ret_type", "INTEGER");
+        {% set type="verylong" %}
+        {% set typecast="" %}
+    {% endif %}
+    {% if tab == 1 and type != "" %}
+        dest = json_{{type}}(dest, "{{key}}", {{typecast}}{{key}});
+    {% elif tab == 2 and type != "" %}
+        dest = json_{{type}}(dest, "{{field}}", {{typecast}}{{key}}->{{field}});
+    {% elif tab == 3 and type != "" %}
+        dest = json_{{type}}(dest, "{{field}}", {{typecast}}{{key}}->{{sub_field}}[{{idx}}].{{field}});
+    {% endif %}
+{% endmacro %}
+
+
+
+
+
+{% macro block_json_object_add2(type, tab, return_object, key, field, sub_field, idx, key2) %}
+    {% if type == "string" %}
+        json_str(dest, "ret_type", "STRING_OP");
+        {% set type="str" %}
+        {% set typecast="(const char *)" %}
+    {% elif type == "int" %}
+        json_verylong(dest, "ret_type", "INTEGER");
+        {% set type="verylong" %}
+        {% set typecast="" %}
+    {% elif type == "address" %}
+        json_verylong(dest, "ret_type", "ADDRESS_OP");
+        {% set type="verylong" %}
+        {% set typecast="(intptr_t)" %}
+    {%else %}
+        json_verylong(dest, "ret_type", "INTEGER");
+        {% set type="verylong" %}
+        {% set typecast="" %}
+    {% endif %}
+    {% if tab == 1 %}
+        json_{{type}}(dest, "{{key}}", {{typecast}}{{key2}});
+    {% elif tab == 2 %}
+        json_{{type}}(dest, "{{field}}", {{typecast}}{{key}}->{{field}});
+    {% elif tab == 3 %}
+        json_{{type}}(dest, "{{field}}", {{typecast}}{{key}}->{{sub_field}}[{{idx}}].{{field}});
+    {% endif %}
+{% endmacro %}
+
+
+{% macro json_object_add(tab, return_object, type, key, ptr_struct, field, sub_field, idx, structs, array_length) %}
+{#    DEBUG KEY: {{ key }} ARRAY_LENGTH: {{ array_length }}#}
+    {% if type == "TYPE_CHAR"				   %} {{ block_json_object_add("int", tab, return_object, key, field, sub_field, idx) }}
+    {% elif type ==  "TYPE_UCHAR"             %} {{ block_json_object_add("int", tab, return_object, key, field, sub_field, idx) }}
+    {% elif type ==  "TYPE_INT"               %} {{ block_json_object_add("int", tab, return_object, key, field, sub_field, idx) }}
+    {% elif type ==  "TYPE_UINT"              %} {{ block_json_object_add("int", tab, return_object, key, field, sub_field, idx) }}
+    {% elif type ==  "TYPE_VOID"              %} {{ block_json_object_add("void", tab, return_object, key, field, sub_field, idx) }}
+    {% elif type ==  "TYPE_SHORT"             %} {{ block_json_object_add("int", tab, return_object, key, field, sub_field, idx) }}
+    {% elif type ==  "TYPE_USHORT"            %} {{ block_json_object_add("int", tab, return_object, key, field, sub_field, idx) }}
+    {% elif type ==  "TYPE_ARRAY_CHAR"        %}  {{ block_json_object_array_add(tab, return_object, "TYPE_CHAR", key, ptr_struct, field, sub_field, idx, structs, array_length) }}
+    {% elif type ==  "TYPE_ARRAY_UCHAR"       %}
+    {% elif type ==  "TYPE_ARRAY_INT"         %}
+    {% elif type ==  "TYPE_ARRAY_UINT"        %}
+    {% elif type ==  "TYPE_ARRAY_VOID"        %}
+    {% elif type ==  "TYPE_ARRAY_STRUCT"      %}
+    {% elif type ==  "TYPE_ARRAY_TYPEDEF"     %}
+    {% elif type ==  "TYPE_PTR_CHAR"          %} {{ block_json_object_add("string", tab, return_object, key, field, sub_field, idx) }}
+    {% elif type ==  "TYPE_PTR_UCHAR"         %} {{ block_json_object_add("string", tab, return_object, key, field, sub_field, idx) }}
+    {% elif type ==  "TYPE_PTR_INT"           %}
+    {% elif type ==  "TYPE_PTR_UINT"          %}
+    {% elif type ==  "TYPE_PTR_VOID"          %} {{ block_json_object_add("address", tab, return_object, key, field, sub_field, idx) }}
+    {% elif type ==  "TYPE_PTR_STRUCT"        %}
+    {% elif type ==  "TYPE_PTR_TYPEDEF"       %} {{ block_json_object_add("address", tab, return_object, key, field, sub_field, idx) }}
+    {% elif type ==  "TYPE_PTR_PTR_TYPEDEF"   %} {{ block_json_object_add("address", tab, return_object, key, field, sub_field, idx) }}
+    {% elif type ==  "TYPE_64"                %} {{ block_json_object_add("int64", tab, return_object, key, field, sub_field, idx) }}
+    {% elif type ==  "TYPE_U64"               %} {{ block_json_object_add("intu64", tab, return_object, key, field, sub_field, idx) }}
+    {% elif type ==  "TYPE_128"               %} {{ block_json_object_add("int64", tab, return_object, key, field, sub_field, idx) }}
+    {% elif type ==  "TYPE_U128"              %} {{ block_json_object_add("intu64", tab, return_object, key, field, sub_field, idx) }}
+    {% elif type ==  "TYPE_PTR_ARRAY_CHAR"    %}
+    {% elif type ==  "TYPE_PTR_ARRAY_UCHAR"   %}
+    {% elif type ==  "TYPE_PTR_ARRAY_INT"     %}
+    {% elif type ==  "TYPE_PTR_ARRAY_UINT"    %}
+    {% elif type ==  "TYPE_PTR_ARRAY_VOID"    %}
+    {% elif type ==  "TYPE_PTR_ARRAY_STRUCT"  %}
+    {% elif type ==  "TYPE_PTR_ARRAY_TYPEDEF" %}
+    {% endif %}
+{% endmacro %}
+
+
+
+{% macro func_call(ret, method, type, module) %}
+    {% if type == "TYPE_VOID" %}
+        {{module}}_{{method.name}}({{ module }}
+    {% else %}
+        {{ret}} = {{module}}_{{method.name}}({{module}}
+    {% endif %}
+    {% for arg in method.args %}
+        ,{{arg.name}}
+    {% endfor %}
+    );
+{% endmacro %}
+
+
+{% macro rpc_func_call(ret, method, type, module) %}
+    {% if type == "TYPE_VOID" %}
+        rpc_{{module}}_{{method.name}}({{module}}, remote_ip, remote_port
+    {% else %}
+        {{ret}} = rpc_{{module}}_{{method.name}}({{module}}, remote_ip, remote_port
+    {% endif %}
+    {% for arg in method.args %}
+        ,{{arg.name}}
+    {% endfor %}
+    );
+{% endmacro %}
+
+

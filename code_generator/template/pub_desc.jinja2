@@ -1,0 +1,26 @@
+{%- import './macro2.jinja2' as macro -%}
+
+
+{%- macro PUB_INC_DESC_interfaces_define() -%}
+    {%- for method in methods -%}
+        {{ '        ' }}"{{module}}_{{method.name}}
+        {%- if loop.last -%}
+        "
+        {%- else -%}
+        ",
+        {% endif %}
+    {% endfor %}
+{%- endmacro -%}
+
+{
+    "name":"{{module}}",
+    "instance":"{{instance}}",
+    "description": "",
+    "version": "{{version}}",
+    "dependence":{
+        "mod_shell":"1.0.0"
+    },
+    "interface":[
+{{ PUB_INC_DESC_interfaces_define() }}
+    ]
+}
