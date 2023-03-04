@@ -67,7 +67,7 @@ STD_CALL std_char_t *get_own_value_type_string(IN own_value_t value)
         case NAN_BOX_SIGNATURE_OBJECT_STRING:
             return "OWN_TYPE_STRING";
         default:
-            return "";
+            return ret;
     }
 
     ownership_object_symbol_t const *symbol = get_own_value_object_symbol(value);

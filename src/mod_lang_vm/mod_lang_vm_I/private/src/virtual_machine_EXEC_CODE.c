@@ -133,11 +133,11 @@ OP_CODE_VAR_L_CLEAN:
     DISPATCH()
 
 OP_CODE_SYM_A:
-    inline_execute_code_SYM_A(thread_id, (code_st *) Codes, Pc);
+    inline_execute_code_SYM_A(thread_id, Codes, Pc);
     DISPATCH()
 
 OP_CODE_SYM_L:
-    inline_execute_code_SYM_L(thread_id, (code_st *) Codes, Pc, Sp);
+    inline_execute_code_SYM_L(thread_id, Codes, Pc, Sp);
     DISPATCH()
 
 OP_CODE_PUSHI:
