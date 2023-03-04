@@ -17,8 +17,8 @@ target_include_directories(mod_thread_pool_I PRIVATE
 target_link_libraries(mod_thread_pool_I PRIVATE pthread ${LINK_PROFILER})
 
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/public/desc.json
-        DESTINATION ${loris_framework_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/bundle/mod_thread_pool_I/)
+        DESTINATION ${${PROJECT_CUSTOM_NAME}_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/bundle/mod_thread_pool_I/)
 
 INSTALL(TARGETS mod_thread_pool_I
-        DESTINATION ${loris_framework_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/bundle/mod_thread_pool_I/)
+        DESTINATION ${${PROJECT_CUSTOM_NAME}_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/bundle/mod_thread_pool_I/)
 

@@ -19,7 +19,7 @@ add_executable(json_output
 target_include_directories(json_output PRIVATE
         /usr/include/json-c/
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${loris_framework_SOURCE_DIR}/src/framework/public/include
+        ${${PROJECT_CUSTOM_NAME}_SOURCE_DIR}/src/framework/public/include
         )
 target_link_libraries(json_output json-c pthread l)
 

@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
-project(loris_framework C)
+set(PROJECT_CUSTOM_NAME "loris_framework")
+project(${PROJECT_CUSTOM_NAME} C)
 
 set(CMAKE_C_COMPILER "clang")
 
@@ -25,4 +26,4 @@ add_subdirectory(src)
 add_subdirectory(code_generator)
 
 INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/files/
-        DESTINATION ${loris_framework_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/)
+        DESTINATION ${${PROJECT_CUSTOM_NAME}_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/)

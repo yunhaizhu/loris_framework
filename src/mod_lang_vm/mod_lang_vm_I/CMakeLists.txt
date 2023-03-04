@@ -16,16 +16,16 @@ add_library(mod_lang_vm_I SHARED
 
 target_include_directories(mod_lang_vm_I PRIVATE
         ${SUB_PUBLIC_INCLUDE_DIRS}
-        ${loris_framework_SOURCE_DIR}/src/mod_shell/mod_shell_I/private/include/
+        ${${PROJECT_CUSTOM_NAME}_SOURCE_DIR}/src/mod_shell/mod_shell_I/private/include/
         ${CMAKE_CURRENT_SOURCE_DIR}/private/include)
 
 target_link_libraries(mod_lang_vm_I PRIVATE pthread ${LINK_PROFILER})
 
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/private/script/mod_lang_vm_I_test.nl
-        DESTINATION ${loris_framework_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/script/)
+        DESTINATION ${${PROJECT_CUSTOM_NAME}_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/script/)
 
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/public/desc.json
-        DESTINATION ${loris_framework_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/bundle/mod_lang_vm_I/)
+        DESTINATION ${${PROJECT_CUSTOM_NAME}_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/bundle/mod_lang_vm_I/)
 
 INSTALL(TARGETS mod_lang_vm_I
-        DESTINATION ${loris_framework_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/bundle/mod_lang_vm_I/)
+        DESTINATION ${${PROJECT_CUSTOM_NAME}_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/bundle/mod_lang_vm_I/)

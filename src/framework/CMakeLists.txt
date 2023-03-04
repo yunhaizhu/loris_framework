@@ -1,4 +1,4 @@
-add_executable(loris_framework
+add_executable(${PROJECT_CUSTOM_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/private/src/main.c
         ${CMAKE_CURRENT_SOURCE_DIR}/private/src/mod.c
         ${CMAKE_CURRENT_SOURCE_DIR}/private/src/mod_ownership.c
@@ -21,16 +21,16 @@ add_custom_command(
         COMMAND make -C ${CMAKE_CURRENT_SOURCE_DIR}/public/src
 )
 
-target_include_directories(loris_framework PRIVATE
+target_include_directories(${PROJECT_CUSTOM_NAME} PRIVATE
         ${SUB_PUBLIC_INCLUDE_DIRS}
         ${CMAKE_CURRENT_SOURCE_DIR}/private/include)
 
-target_link_libraries(loris_framework PUBLIC gsl gslcblas m dl rt pthread ${LINK_PROFILER})
+target_link_libraries(${PROJECT_CUSTOM_NAME} PUBLIC gsl gslcblas m dl rt pthread ${LINK_PROFILER})
 
 INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/private/script/
-        DESTINATION ${loris_framework_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/script/)
+        DESTINATION ${${PROJECT_CUSTOM_NAME}_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/script/)
 
-INSTALL(TARGETS loris_framework DESTINATION ${loris_framework_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/)
+INSTALL(TARGETS ${PROJECT_CUSTOM_NAME} DESTINATION ${${PROJECT_CUSTOM_NAME}_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/)
 
 
 
