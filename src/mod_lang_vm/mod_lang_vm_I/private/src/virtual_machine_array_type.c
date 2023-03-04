@@ -12,7 +12,6 @@
  * @date    2021-10-30
  *
  */
-#if 1
 #include "virtual_machine_array_type.h"
 #include "virtual_machine.h"
 
@@ -205,4 +204,4 @@ STD_CALL std_int_t move_VAR_with_array_type(IN ownership_object_symbol_t *from_s
 
     return STD_RV_SUC;
 }
-#endif
+

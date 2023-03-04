@@ -12,7 +12,7 @@
  * @date    2021-10-30
  *
  */
-#if 1
+
 #include "virtual_machine_hash_type.h"
 #include "virtual_machine.h"
 
@@ -235,4 +235,4 @@ STD_CALL std_void_t walk_VAR_with_hash_type(IN const ownership_object_symbol_t *
 
     std_lock_free_key_hash_value_walk(hash_head, walk_callback, p_cb_data);
 }
-#endif
+
