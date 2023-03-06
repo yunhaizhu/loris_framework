@@ -27,6 +27,10 @@
 10. pip3 install jinja2
 11. sudo apt install indent
 
+## compile loris_framework
+1. cmake --build cmake-build-debug
+2. cmake --install cmake-build-debug
+
 ## run loris_framework 
 Use these steps to run
 
