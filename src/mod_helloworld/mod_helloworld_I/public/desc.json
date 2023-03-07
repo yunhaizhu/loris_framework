@@ -1,0 +1,12 @@
+{
+    "name":"mod_helloworld",
+    "instance":"mod_helloworld_I",
+    "description": "",
+    "version": "1.0.0",
+    "dependence":{
+        "mod_shell":"1.0.0"
+    },
+    "interface":[
+        "mod_helloworld_say_hello"
+    ]
+}

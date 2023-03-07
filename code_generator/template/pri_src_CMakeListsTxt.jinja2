@@ -11,11 +11,11 @@ target_include_directories({{instance}} PRIVATE
 target_link_libraries({{instance}} PRIVATE pthread ${LINK_PROFILER})
 
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/private/script/{{instance}}_test.nl
-        DESTINATION ${loris_vm_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/script/ )
+        DESTINATION ${${PROJECT_CUSTOM_NAME}_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/script/ )
 
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/public/desc.json
-        DESTINATION ${loris_vm_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/bundle/{{instance}}/ )
+        DESTINATION ${${PROJECT_CUSTOM_NAME}_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/bundle/{{instance}}/ )
 
 INSTALL(TARGETS {{instance}}
-        DESTINATION ${loris_vm_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/bundle/{{instance}}/ )
+        DESTINATION ${${PROJECT_CUSTOM_NAME}_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/bundle/{{instance}}/ )
 
