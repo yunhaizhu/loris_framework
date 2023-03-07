@@ -36,7 +36,7 @@ Use these steps to run
 
 1. cd deploy/Debug
 2. ./loris_framework
-3. type "exit()" to exit the loris_framework
+3. type in console to exit the loris_framework with: exit()
 
 ## run loris_framework with Profile
 Use these steps to profile 
@@ -54,7 +54,9 @@ find ./src -name *.[ch] |xargs python3 add_doxygen_comment.py
 2. python3 code_generator.py idl/mod_helloworld_I.idl
 3. copy directory "target/orig/1.0.0/mod_helloworld_I" into "src/"
 4. compile and run 
-5. script("mod_helloworld_I_test.nl")
+5. type in console with: install("mod_helloworld_I")
+6. type in console with: start(5)
+7. type in console with: script("mod_helloworld_I_test.nl")
 
 
 ## COPYRIGHT
