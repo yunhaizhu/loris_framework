@@ -1,24 +1,42 @@
+load_lib "shell_lib"
+
 def mod_helloworld_say_hello(var root, var str, var ret)
 {
     var name_value_hash<> = <"str":str>
     var json_args
 
-    json_args = make_json(name_value_hash)
+    make_json(name_value_hash, json_args)
 
-    ret = run("mod_helloworld_say_hello", root, json_args)
+    run("mod_helloworld_say_hello", root, json_args, ret)
 }
-
 
 def run_say_hello(var root, var run_state)
 {
     var str
     var ret_say_hello
-    var keys_tuple = run_state.find("keys_tuple")
-    var hash_key_value = run_state.find("hash_key_value")
+    var keys_tuple = run_state.find_item("keys_tuple")
+    var hash_key_value = run_state.find_item("hash_key_value")
+
+    random_string(32, str)
 
     mod_helloworld_say_hello(root,str,ret_say_hello)
 }
 
+def init()
+{
+    install("mod_helloworld_I")
+    start(5)
+
+    ps()
+}
+
+def cleanup()
+{
+    stop(5)
+    uninstall(5)
+
+    ps()
+}
 
 def main()
 {
@@ -33,24 +51,26 @@ def main()
 
     debug("ERR")
 
-    mod_helloworld_test = create_instance(iid, args)
+    init()
+
+    create_instance(iid, args, mod_helloworld_test)
     print("mod_helloworld_test:", mod_helloworld_test)
 
     run_say_hello(mod_helloworld_test, run_state)
-
 
     for (i = 0, i < run_max, i += 1) {
         var k
         var run_random
 
-        run_random = random_number(32)
+        random_number(32, run_random)
         k = run_random % 1
 
         if ( k == 0) {
             run_say_hello(mod_helloworld_test, run_state)
         }
-
     }
 
     delete_instance(iid, mod_helloworld_test)
+
+    cleanup()
 }

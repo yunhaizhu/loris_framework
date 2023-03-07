@@ -16,9 +16,9 @@ def {{ module }}_{{method.name}}(var root
                          {%- endfor -%}>
     var json_args
 
-    json_args = make_json(name_value_hash)
+    make_json(name_value_hash, json_args)
 
-    ret = run("{{ module }}_{{method.name}}", root, json_args)
+    run("{{ module }}_{{method.name}}", root, json_args, ret)
 }
 
 
@@ -38,7 +38,7 @@ def run_check(var root, var run_state)
     var {{ arg.name }}
     {% endfor %}
 
-    keys_tuple = run_state.find("keys_tuple")
+    keys_tuple = run_state.find_item("keys_tuple")
 
     keys_count = keys_tuple.count()
     print("keys_count:", keys_count)
@@ -75,7 +75,7 @@ def run_add(var root, var run_state)
     var keys_count
     var key_add = random_number(64)
 
-    keys_tuple = run_state.find("keys_tuple")
+    keys_tuple = run_state.find_item("keys_tuple")
 
     {% for arg in method.args %}
     {{ arg.name }} = key_add
@@ -97,8 +97,16 @@ def run_{{ func }}(var root, var run_state)
     var {{ arg.name }}
     {% endfor %}
     var ret_{{ func }}
-    var keys_tuple = run_state.find("keys_tuple")
-    var hash_key_value = run_state.find("hash_key_value")
+    var keys_tuple = run_state.find_item("keys_tuple")
+    var hash_key_value = run_state.find_item("hash_key_value")
+
+    {% for arg in method.args %}
+        {% if arg.type == "TYPE_PTR_CHAR" %}
+    random_string (32, {{arg.name}})
+        {% elif arg.type == "TYPE_INT" %}
+    random_number (32, {{arg.name}})
+        {% endif %}
+    {% endfor %}
 
     {{ module }}_{{ func }}(root, {%- for arg in method.args -%}
                              {{ arg.name }},
@@ -134,7 +142,7 @@ def main()
 
     debug("ERR")
 
-    {{ module }}_test = create_instance(iid, args)
+    create_instance(iid, args, {{ module }}_test)
     print("{{ module }}_test:", {{ module }}_test)
 
 {% for method in methods %}
@@ -146,7 +154,7 @@ def main()
         var k
         var run_random
 
-        run_random = random_number(32)
+        random_number(32, run_random)
         k = run_random % {{methods|length}}
 
     {% for method in methods %}

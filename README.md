@@ -49,10 +49,12 @@ Use these steps to profile
 ## Add doxygen
 find ./src -name *.[ch] |xargs python3 add_doxygen_comment.py 
 
-## code generator
+## code generator for helloworld module
 1. cd code_generator
-2. python3 code_generator.py idl/mod_lang_vm_I.idl
-3. copy directory "target/orig/1.0.0/mod_lang_vm" into "src/"
+2. python3 code_generator.py idl/mod_helloworld_I.idl
+3. copy directory "target/orig/1.0.0/mod_helloworld_I" into "src/"
+4. compile and run 
+5. script("mod_helloworld_I_test.nl")
 
 
 ## COPYRIGHT

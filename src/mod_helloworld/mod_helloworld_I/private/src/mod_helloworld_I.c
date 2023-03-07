@@ -77,6 +77,7 @@ STD_CALL std_rv_t mod_helloworld_I_cleanup(mod_helloworld_t * p_m)
  */
 STD_CALL std_int_t mod_helloworld_I_say_hello(IN mod_helloworld_t * p_m, IN std_char_t * str)
 {
+    STD_LOG(DISPLAY, "%s %s\n", __FUNCTION__ , str);
 	return 0;
 
 }
