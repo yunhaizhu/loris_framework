@@ -27,3 +27,4 @@ add_subdirectory(code_generator)
 
 INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/files/
         DESTINATION ${${PROJECT_CUSTOM_NAME}_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/)
+

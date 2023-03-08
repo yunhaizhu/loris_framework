@@ -439,7 +439,7 @@ STD_CALL std_rv_t get_multiple_lines(IN const std_char_t *name, IN std_char_t *i
     std_bool_t ret;
 
     snprintf(script_name, sizeof(script_name), "script/%s", name);
-    STD_LOG(ERR, "script_name:%s\n", script_name);
+
     fp = fopen(script_name, "r");
     STD_ASSERT_RV(fp != NULL, STD_RV_ERR_INVALIDARG);
 
