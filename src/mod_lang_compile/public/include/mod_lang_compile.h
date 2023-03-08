@@ -52,6 +52,7 @@ struct mod_lang_compile_ops_st {
     std_void_t (*cmd)(IN mod_lang_compile_t *m, IN lang_ast_t *cmd);
     std_void_t (*expr)(IN mod_lang_compile_t *m, IN lang_ast_t *cmd);
     std_char_t *(*generated_bytecode)(IN mod_lang_compile_t *m, IN std_char_t *file_name);
+    std_void_t (*reset) (IN mod_lang_compile_t * m);
 };
 
 /***************************************************
@@ -76,5 +77,6 @@ struct mod_lang_compile_ops_st {
 #define mod_lang_compile_cmd(m, cmd) ((m)->p_ops->cmd((mod_lang_compile_t *) (m), cmd))
 #define mod_lang_compile_expr(m, cmd) ((m)->p_ops->expr((mod_lang_compile_t *) (m), cmd))
 #define mod_lang_compile_generated_bytecode(m, file_name) ((m)->p_ops->generated_bytecode((mod_lang_compile_t *) (m), file_name))
+#define mod_lang_compile_reset(m) ((m)->p_ops->reset((mod_lang_compile_t *)(m)))
 
 #endif

@@ -9,3 +9,4 @@ std_void_t func(IN lang_ast_t *func_id, IN lang_ast_t *func_params, IN lang_ast_
 std_void_t cmd(IN lang_ast_t *cmd);
 std_void_t expr(IN lang_ast_t *cmd);
 std_char_t *generated_bytecode(IN std_char_t *file_name);
+std_void_t reset();

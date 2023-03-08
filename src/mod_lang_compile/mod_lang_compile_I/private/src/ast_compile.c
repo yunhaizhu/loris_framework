@@ -1360,3 +1360,8 @@ std_void_t compile_expr(lang_ast_t *p)
             STD_LOG(DEBUG, "UNKNOWN OP\n");
     }
 }
+
+std_void_t compile_reset()
+{
+    global_gsl_rng_env[get_std_thread_id()].label_counter = 0;
+}

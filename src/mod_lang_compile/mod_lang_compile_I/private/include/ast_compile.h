@@ -236,4 +236,13 @@ STD_CALL std_void_t compile_sym(IN symbol_t *var, std_int_t line);
  * @return  STD_CALL std_void_t
  */
 STD_CALL std_void_t compile_expr_sym(lang_ast_t *p);
+
+/**
+ * compile_reset
+ * @brief
+ * @param   p
+ * @return  STD_CALL std_void_t
+ */
+STD_CALL std_void_t compile_reset();
+
 #endif

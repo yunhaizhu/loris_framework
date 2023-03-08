@@ -132,6 +132,17 @@ STD_CALL std_char_t *mod_lang_compile_I_generated_bytecode(IN mod_lang_compile_t
     return compiled_body;
 }
 
+/**
+ * mod_lang_compile_I_reset
+ * @brief
+ * @param   p_m
+ * @return  STD_CALL             std_void_t
+ */
+STD_CALL std_void_t mod_lang_compile_I_reset(IN mod_lang_compile_t * p_m)
+{
+    compile_reset();
+}
+
 struct mod_lang_compile_ops_st mod_lang_compile_I_ops = {
         mod_lang_compile_I_init,
         mod_lang_compile_I_cleanup,
@@ -141,7 +152,7 @@ struct mod_lang_compile_ops_st mod_lang_compile_I_ops = {
         mod_lang_compile_I_cmd,
         mod_lang_compile_I_expr,
         mod_lang_compile_I_generated_bytecode,
-
+        mod_lang_compile_I_reset,
 };
 
 /**

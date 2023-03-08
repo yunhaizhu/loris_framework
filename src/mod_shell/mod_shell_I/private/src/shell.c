@@ -340,6 +340,7 @@ STD_CALL std_rv_t compile_file_body(IN const std_char_t *name, IN std_char_t *bo
 {
     std_rv_t ret;
 
+    mod_lang_compile_reset(p_global_mod_lang_compile);
     ret = mod_lang_parse_parse(p_global_mod_lang_parse, (std_char_t *) name, body, std_safe_strlen(name, BUF_SIZE_8192 * 10));
 
     if (ret != STD_RV_SUC) {
