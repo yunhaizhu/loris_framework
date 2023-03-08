@@ -19,7 +19,7 @@
 #include "virtual_machine_object.h"
 #include "virtual_machine_safe_var.h"
 
-#define EXEC_COMPILED_CODE 0
+#define EXEC_COMPILED_CODE 1
 #define DUMP_EXEC_CODE 0
 
 #define MAX_CODE 2000 * 3

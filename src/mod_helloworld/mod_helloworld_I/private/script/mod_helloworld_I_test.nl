@@ -47,7 +47,7 @@ def main()
     var hash_key_value<> = <>
 	var run_state<> = <"keys_tuple": keys_tuple, "hash_key_value":hash_key_value>
     var i
-    var run_max = 1000
+    var run_max = 0
 
     debug("ERR")
 

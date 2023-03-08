@@ -155,6 +155,29 @@ STD_CALL std_void_t dump_codes(IN const std_char_t *name, IN std_int_t start_pc)
                 emit_c_codes("inline_execute_code_POP(thread_id, &x);\n");
                 break;
 
+            case VAR_A:
+                emit_c_codes("inline_execute_code_VAR_A(thread_id, Codes, Stack, Pc, Fp);\n");
+                break;
+
+            case VAR_L:
+                emit_c_codes("inline_execute_code_VAR_L(thread_id, Codes, Stack, Pc, Fp);\n");
+                break;
+
+            case VAR_A_CLEAN:
+                emit_c_codes("inline_execute_code_VAR_A_CLEAN(thread_id, Codes, Pc);\n");
+                break;
+
+            case VAR_L_CLEAN:
+                emit_c_codes("inline_execute_code_VAR_L_CLEAN(thread_id, Codes, Pc);\n");
+                break;
+
+            case SYM_A:
+                emit_c_codes("inline_execute_code_SYM_A(thread_id, Codes, Pc);\n");
+                break;
+
+            case SYM_L:
+                emit_c_codes("inline_execute_code_SYM_L(thread_id, Codes, Pc, Sp);\n");
+                break;
 
             case PUSHI:
             case PUSHU:
@@ -168,7 +191,11 @@ STD_CALL std_void_t dump_codes(IN const std_char_t *name, IN std_int_t start_pc)
                 break;
 
             case Inp_ADD:
-                emit_c_codes("inline_execute_code_Inp_ADD(thread_id);\n");
+                emit_c_codes("inline_execute_code_Inp_ADD(thread_id, Codes, Stack, Pc, Fp);\n");
+                break;
+
+            case Inp_ADDI:
+                emit_c_codes("inline_execute_code_Inp_ADD(thread_id, Codes, Stack, Pc, Fp);\n");
                 break;
 
             case SUB:
@@ -176,7 +203,7 @@ STD_CALL std_void_t dump_codes(IN const std_char_t *name, IN std_int_t start_pc)
                 break;
 
             case Inp_SUB:
-                emit_c_codes("inline_execute_code_Inp_SUB(thread_id);\n");
+                emit_c_codes("inline_execute_code_Inp_SUB(thread_id, Codes, Stack, Pc, Fp);\n");
                 break;
 
             case MUL:
@@ -184,7 +211,7 @@ STD_CALL std_void_t dump_codes(IN const std_char_t *name, IN std_int_t start_pc)
                 break;
 
             case Inp_MUL:
-                emit_c_codes("inline_execute_code_Inp_MUL(thread_id);\n");
+                emit_c_codes("inline_execute_code_Inp_MUL(thread_id, Codes, Stack, Pc, Fp);\n");
                 break;
 
             case DIV:
@@ -192,7 +219,7 @@ STD_CALL std_void_t dump_codes(IN const std_char_t *name, IN std_int_t start_pc)
                 break;
 
             case Inp_DIV:
-                emit_c_codes("inline_execute_code_Inp_DIV(thread_id);\n");
+                emit_c_codes("inline_execute_code_Inp_DIV(thread_id, Codes, Stack, Pc, Fp);\n");
                 break;
 
             case MOD:
@@ -200,7 +227,7 @@ STD_CALL std_void_t dump_codes(IN const std_char_t *name, IN std_int_t start_pc)
                 break;
 
             case Inp_MOD:
-                emit_c_codes("inline_execute_code_Inp_MOD(thread_id);\n");
+                emit_c_codes("inline_execute_code_Inp_MOD(thread_id, Codes, Stack, Pc, Fp);\n");
                 break;
 
             case GT:
@@ -227,14 +254,6 @@ STD_CALL std_void_t dump_codes(IN const std_char_t *name, IN std_int_t start_pc)
                 emit_c_codes("inline_execute_code_BGE(thread_id);\n");
                 break;
 
-            case AND:
-                emit_c_codes("inline_execute_code_AND(thread_id);\n");
-                break;
-
-            case OR:
-                emit_c_codes("inline_execute_code_OR(thread_id);\n");
-                break;
-
             case BEQ0:
                 emit_c_codes("if (inline_execute_code_BEQ0(thread_id, Codes, Pc) == STD_BOOL_TRUE) {\n"
                              "      goto *jump_table[ *Pc ];\n"
@@ -244,12 +263,20 @@ STD_CALL std_void_t dump_codes(IN const std_char_t *name, IN std_int_t start_pc)
                              "}\n");
                 break;
 
+            case AND:
+                emit_c_codes("inline_execute_code_AND(thread_id);\n");
+                break;
+
+            case OR:
+                emit_c_codes("inline_execute_code_OR(thread_id);\n");
+                break;
+
             case LOADA:
-                emit_c_codes("inline_execute_code_LOADA(thread_id, Codes, Stack, Pc, Fp, Sp);\n");
+                emit_c_codes("inline_execute_code_LOADA(thread_id, Codes, Pc);\n");
                 break;
 
             case LOADL:
-                emit_c_codes("inline_execute_code_LOADL(thread_id, Codes, Stack, Pc, Fp, Sp);\n");
+                emit_c_codes("inline_execute_code_LOADL(thread_id, Codes, Pc);\n");
                 break;
 
             case STOREA:
@@ -284,7 +311,6 @@ STD_CALL std_void_t dump_codes(IN const std_char_t *name, IN std_int_t start_pc)
                              "}else {\n"
                              "      goto *jump_table[ *Pc ]; \n"
                              "}\n");
-
                 continue;
 
             case POPR:
@@ -295,32 +321,9 @@ STD_CALL std_void_t dump_codes(IN const std_char_t *name, IN std_int_t start_pc)
                 emit_c_codes("inline_execute_code_FRAME(thread_id, Codes, Pc, Fp, Sp);\n");
                 break;
 
+
             case CUSTOM:
                 emit_c_codes("inline_execute_code_CUSTOM(thread_id, Codes, Pc);\n");
-                break;
-
-            case VAR_A:
-                emit_c_codes("inline_execute_code_VAR_A(thread_id, Codes, Stack, Pc, Fp);\n");
-                break;
-
-            case VAR_L:
-                emit_c_codes("inline_execute_code_VAR_L(thread_id, Codes, Stack, Pc, Fp);\n");
-                break;
-
-            case VAR_A_CLEAN:
-                emit_c_codes("inline_execute_code_VAR_A_CLEAN(thread_id, Codes, Pc);\n");
-                break;
-
-            case VAR_L_CLEAN:
-                emit_c_codes("inline_execute_code_VAR_L_CLEAN(thread_id, Codes, Pc);\n");
-                break;
-
-            case SYM_A:
-                emit_c_codes("inline_execute_code_SYM_A(thread_id, Codes, Pc);\n");
-                break;
-
-            case SYM_L:
-                emit_c_codes("inline_execute_code_SYM_L(thread_id, Codes, Pc, Sp);\n");
                 break;
 
             case NEW_ARRAY:
@@ -335,14 +338,6 @@ STD_CALL std_void_t dump_codes(IN const std_char_t *name, IN std_int_t start_pc)
                 emit_c_codes("inline_execute_code_NEW_KEY_HASH(thread_id, Codes, Stack, Pc, Fp);\n");
                 break;
 
-            case SET_ITEM:
-                emit_c_codes("inline_execute_code_SET_ITEM(thread_id, Codes, Stack, Pc, Fp);\n");
-                break;
-
-            case GET_ITEM:
-                emit_c_codes("inline_execute_code_GET_ITEM(thread_id, Codes, Stack, Pc, Fp);\n");
-                break;
-
             case ADD_ITEM:
                 emit_c_codes("inline_execute_code_ADD_ITEM(thread_id, Codes, Stack, Pc, Fp);\n");
                 break;
@@ -355,6 +350,14 @@ STD_CALL std_void_t dump_codes(IN const std_char_t *name, IN std_int_t start_pc)
                 emit_c_codes("inline_execute_code_DEL_ITEM(thread_id, Codes, Stack, Pc, Fp);\n");
                 break;
 
+            case GET_ITEM:
+                emit_c_codes("inline_execute_code_GET_ITEM(thread_id, Codes, Stack, Pc, Fp);\n");
+                break;
+
+            case SET_ITEM:
+                emit_c_codes("inline_execute_code_SET_ITEM(thread_id, Codes, Stack, Pc, Fp);\n");
+                break;
+
             case FIND_ITEM:
                 emit_c_codes("inline_execute_code_FIND_ITEM(thread_id, Codes, Stack, Pc, Fp);\n");
                 break;
@@ -362,11 +365,13 @@ STD_CALL std_void_t dump_codes(IN const std_char_t *name, IN std_int_t start_pc)
             case COUNT_ITEM:
                 emit_c_codes("inline_execute_code_COUNT_ITEM(thread_id, Codes, Stack, Pc, Fp);\n");
                 break;
+
             default:
                 emit_c_codes("\n");
                 break;
         }
         emit_c_codes("      (*Pc)++;\n");
+
         //        emit_c_codes("if (*Sp > MAX_STACK - 1 || *Sp < 0) {\n"
         //                     "      STD_LOG(ERR, \"VM stack is overflow! \\n\");\n"
         //                     "      return;\n"

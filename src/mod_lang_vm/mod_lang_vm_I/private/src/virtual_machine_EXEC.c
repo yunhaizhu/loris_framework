@@ -707,6 +707,7 @@ STD_CALL static inline std_void_t inline_execute_code_CUSTOM(IN std_int_t thread
 
     snprintf(key, sizeof(key), "%ld", Codes[*Pc].i_operand);
     func_entry = (func_entry_t *) std_lock_free_key_hash_find(vm[get_std_thread_id()].custom_func_hash, key, std_safe_strlen(key, sizeof(key)));
+
     STD_ASSERT_RV(func_entry != NULL, );
     func_entry->reg_func(thread_id, func_entry->arg_counts);
 }

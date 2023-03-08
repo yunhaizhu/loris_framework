@@ -20,7 +20,7 @@
 #include "std_common.h"
 #include "std_lock_free_key_hash.h"
 #include "std_safe.h"
-
+#include "xxh3.h"
 
 #include "mod_shell_I.h"
 #include "mod_thread_pool.h"
@@ -73,7 +73,7 @@ std_int_t global_func_extern_idx = FUNC_EXTERN_LEN;
 STD_CALL std_rv_t cmd_debug(IN std_char_t *debug_level)
 {
     STD_LOG(DISPLAY, "DEBUG is set to %s \n", debug_level);
-    STD_LOG(DISPLAY, ">>");
+    STD_LOG(DISPLAY, "$");
 
     if (strcmp(debug_level, "DEBUG") == 0) {
         STD_LOG_INIT(DEBUG);
@@ -99,7 +99,7 @@ STD_CALL std_rv_t cmd_help()
 {
     STD_LOG(DISPLAY, "help(), ps(), install(\"bundle_name\"), uninstall(id), start(id), stop(id), show(id), run(), grace_exit(id_max) \n");
     STD_LOG(DISPLAY, "compile(\"script_name\"), execute(\"script_name\"), thread_execute(1, \"script_name\"), script(\"script_name\") \n");
-    STD_LOG(DISPLAY, ">>");
+    STD_LOG(DISPLAY, "$");
 
     return STD_RV_SUC;
 }
@@ -439,7 +439,7 @@ STD_CALL std_rv_t get_multiple_lines(IN const std_char_t *name, IN std_char_t *i
     std_bool_t ret;
 
     snprintf(script_name, sizeof(script_name), "script/%s", name);
-    STD_LOG(ERR, "script_name:%s", script_name);
+    STD_LOG(ERR, "script_name:%s\n", script_name);
     fp = fopen(script_name, "r");
     STD_ASSERT_RV(fp != NULL, STD_RV_ERR_INVALIDARG);
 
@@ -530,15 +530,20 @@ STD_CALL std_rv_t cmd_compile_body(IN const std_char_t *name, IN std_char_t *bod
 STD_CALL std_rv_t cmd_execute(IN std_char_t *name)
 {
     std_char_t *compiled_body;
+    std_u64_t u64_key;
+    std_size_t buf_len;
 
     compiled_body = mod_lang_compile_generated_bytecode(p_global_mod_lang_compile, name);
+    buf_len = std_safe_strlen(compiled_body, BUF_SIZE_8192 * 10);
+    u64_key = XXH64(compiled_body, sizeof(char) * buf_len, 0);
+    u64_key += VERSION_NUMBER;
 
     STD_ASSERT_RV_ACTION(mod_lang_vm_run_init(p_global_mod_lang_vm, name, compiled_body) == STD_RV_SUC, STD_RV_ERR_FAIL, mod_lang_vm_run_cleanup(p_global_mod_lang_vm, name));
-    mod_lang_vm_run_execute(p_global_mod_lang_vm, name, 123321);
+    mod_lang_vm_run_execute(p_global_mod_lang_vm, name, u64_key);
     mod_lang_vm_run_cleanup(p_global_mod_lang_vm, name);
 
     STD_LOG(DISPLAY, "%s EXECUTE SUCCESS\n", name);
-    STD_LOG(DISPLAY, ">>");
+    STD_LOG(DISPLAY, "$");
     return STD_RV_SUC;
 }
 
@@ -565,7 +570,7 @@ STD_CALL std_rv_t cmd_call(IN const std_char_t *name, IN std_char_t *args_ret_js
     //    vm_cleanup(name);
 
     STD_LOG(DISPLAY, "%s EXECUTE SUCCESS\n", name);
-    STD_LOG(DISPLAY, ">>");
+    STD_LOG(DISPLAY, "$");
     return STD_RV_SUC;
 }
 
@@ -704,7 +709,7 @@ STD_CALL std_rv_t cmd_shell(mod_shell_t *p_m)
         }
 
         memset(cmd, 0, sizeof(cmd));
-        STD_LOG(DISPLAY, ">>");
+        STD_LOG(DISPLAY, "$");
     }
 
     std_lock_free_key_hash_value_destroy(global_compiled_body);
