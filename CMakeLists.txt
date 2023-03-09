@@ -25,6 +25,9 @@ set(LINK_PROFILER "profiler")
 add_subdirectory(src)
 add_subdirectory(code_generator)
 
+file(MAKE_DIRECTORY ${${PROJECT_CUSTOM_NAME}_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/dynamic_exec/src)
+file(MAKE_DIRECTORY ${${PROJECT_CUSTOM_NAME}_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/dynamic_exec/obj)
 INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/files/
         DESTINATION ${${PROJECT_CUSTOM_NAME}_SOURCE_DIR}/deploy/${CMAKE_BUILD_TYPE}/)
+
 

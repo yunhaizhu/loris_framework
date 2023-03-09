@@ -58,6 +58,10 @@ find ./src -name *.[ch] |xargs python3 add_doxygen_comment.py
 6. type in console with: start(5)
 7. type in console with: script("mod_helloworld_I_test.nl")
 
+## Usage
+Loris Framework MIPS virtual machine with JIT support is built on loris framework. 
+https://github.com/yunhaizhu/loris_framework_mips
+
 
 ## COPYRIGHT
 GNU General Public License, version 3
