@@ -14,12 +14,6 @@ def test1_var1()
     safe_to = 123
     assert(safe_to.get() == 123, "safe_to.get() == 123")
 
-    safe_to := 234
-    assert(safe_to.get() == 234, "safe_to.get() == 234")
-
-    safe_to &= 456
-    assert(safe_to.get() != 456, "safe_to.get() != 456")
-
     safe_three = "hello safe_three"
     print("safe_to:", safe_to, "safe_three.get():", safe_three.get())
 
@@ -36,11 +30,11 @@ def test1_var1()
     assert(safe_three == "string i", "safe_three linked to safe_i")
 
     safe_three.set("hello safe_three")
-    print("safe_three:", safe_three, safe_i)
-    assert(safe_three == "hello safe_three", "safe_three linked to safe_i")
+    print("safe_three:", safe_three)
+    assert(safe_three == "hello safe_three", "safe_three is hello safe_three")
 
     print("safe_i:", safe_i)
-    assert(safe_i == "hello safe_three", "safe_i is changed to hello safe_three")
+    assert(safe_i != "hello safe_three", "safe_i is still string i")
 }
 
 def test1_var2()

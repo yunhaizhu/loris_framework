@@ -19,16 +19,19 @@
 
 typedef enum gen_opcode_s {
     POP = 1,
+
     VAR_A,
     VAR_L,
     VAR_A_CLEAN,
     VAR_L_CLEAN,
     SYM_A,
     SYM_L,
+
     PUSHI,
     PUSHU,
     PUSHA,
     PUSHS,
+
     ADD,
     Inp_ADD,
     Inp_ADDI,
@@ -40,6 +43,7 @@ typedef enum gen_opcode_s {
     Inp_DIV,
     MOD,
     Inp_MOD,
+
     GT,
     LT,
     EQ,
@@ -49,12 +53,12 @@ typedef enum gen_opcode_s {
     BEQ0,
     AND,
     OR,
+
     LOADA,
     LOADL,
     STOREA,
     STOREL,
-    STOREL_C,
-    STOREL_NC,
+
     JUMP,
     CALL,
     RET,

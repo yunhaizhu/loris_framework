@@ -34,8 +34,7 @@ typedef enum lang_ast_code {
     SYMBOL_OP,
 
     EQ_OP,
-    EQ_COPY_OP,
-    EQ_NOCOPY_OP,
+
     PLUS_OP,
     Inp_PLUS_OP,
     MINUS_OP,

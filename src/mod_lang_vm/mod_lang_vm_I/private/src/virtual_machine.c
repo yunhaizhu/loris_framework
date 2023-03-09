@@ -254,10 +254,18 @@ typedef struct gen_code_table_s {
 
 gen_code_table_t gen_code_table[] = {
         {"POP", POP},
+        {"VAR_A", VAR_A},
+        {"VAR_L", VAR_L},
+        {"VAR_A_CLEAN", VAR_A_CLEAN},
+        {"VAR_L_CLEAN", VAR_L_CLEAN},
+        {"SYM_A", SYM_A},
+        {"SYM_L", SYM_L},
+
         {"PUSHI", PUSHI},
         {"PUSHU", PUSHU},
         {"PUSHA", PUSHA},
         {"PUSHS", PUSHS},
+
         {"ADD", ADD},
         {"Inp_ADD", Inp_ADD},
         {"Inp_ADDI", Inp_ADDI},
@@ -269,21 +277,26 @@ gen_code_table_t gen_code_table[] = {
         {"Inp_DIV", Inp_DIV},
         {"MOD", MOD},
         {"Inp_MOD", Inp_MOD},
+
         {"GT", GT},
         {"LT", LT},
         {"EQ", EQ},
         {"NEQ", NEQ},
         {"LGE", LGE},
         {"BGE", BGE},
+        {"BEQ0", BEQ0},
+
         {"AND", AND},
         {"OR", OR},
-        {"BEQ0", BEQ0},
+
+
+
         {"LOADA", LOADA},
         {"LOADL", LOADL},
         {"STOREA", STOREA},
         {"STOREL", STOREL},
-        {"STOREL_C", STOREL_C},
-        {"STOREL_NC", STOREL_NC},
+
+
         {"JUMP", JUMP},
         {"CALL", CALL},
         {"RET", RET},
@@ -292,12 +305,7 @@ gen_code_table_t gen_code_table[] = {
         {"ENTRY", ENTRY},
         {"LABEL", LABEL},
         {"CUSTOM", CUSTOM},
-        {"VAR_A", VAR_A},
-        {"VAR_L", VAR_L},
-        {"VAR_A_CLEAN", VAR_A_CLEAN},
-        {"VAR_L_CLEAN", VAR_L_CLEAN},
-        {"SYM_A", SYM_A},
-        {"SYM_L", SYM_L},
+
         {"NEW_ARRAY", NEW_ARRAY},
         {"DEL_ARRAY", DEL_ARRAY},
         {"NEW_LIST", NEW_LIST},

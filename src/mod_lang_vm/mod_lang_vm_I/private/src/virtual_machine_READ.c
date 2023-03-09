@@ -377,8 +377,7 @@ STD_CALL std_rv_t read_code(IN const std_char_t *buffer)
             case LOADL:
             case STOREA:
             case STOREL:
-            case STOREL_C:
-            case STOREL_NC:
+
             case FRAME:
             case POPR:
             case CUSTOM:

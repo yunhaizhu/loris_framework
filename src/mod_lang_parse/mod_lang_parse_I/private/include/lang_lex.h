@@ -51,9 +51,6 @@ typedef enum lex_token_s {
     TOKEN_ADD_KEY_ITEM,
     TOKEN_LOAD_LIB,
 
-    TOKEN_CPEQ,
-    TOKEN_LKEQ,
-
     TOKEN_BGE,
     TOKEN_LGE,
     TOKEN_EQ,

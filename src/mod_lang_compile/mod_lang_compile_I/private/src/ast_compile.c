@@ -129,72 +129,6 @@ std_void_t compile_store_var(symbol_t *var, lang_ast_t *v, std_int_t line)
 }
 
 /**
- * compile_store_copy_var
- * @brief   
- * @param   var
- * @param   v
- * @return  std_void_t
- */
-std_void_t compile_store_copy_var(symbol_t *var, lang_ast_t *v, std_int_t line)
-{
-    std_int_t envp = global_gsl_rng_env[get_std_thread_id()].envp;
-    const Environment *Env = global_gsl_rng_env[get_std_thread_id()].Env;
-
-    compile_expr(v);
-    for (std_int_t i = envp - 1; i >= 0; i--) {
-        if (Env[i].var == var) {
-            switch (Env[i].var_kind) {
-                case VAR_ARG:
-                    gen_codeI(STOREA, Env[i].pos, 0, line);
-                    gen_code(POP, line);
-                    return;
-                case VAR_LOCAL:
-                    gen_codeI(STOREL_C, Env[i].pos, 0, line);
-                    gen_code(POP, line);
-                    return;
-                default:
-                    break;
-            }
-        }
-    }
-    STD_LOG(ERR, "undefined variable '%s', please check line [%d]\n", var->name, line);
-    compile_error();
-}
-
-/**
- * compile_store_nocopy_var
- * @brief   
- * @param   var
- * @param   v
- * @return  std_void_t
- */
-std_void_t compile_store_nocopy_var(symbol_t *var, lang_ast_t *v, std_int_t line)
-{
-    std_int_t envp = global_gsl_rng_env[get_std_thread_id()].envp;
-    const Environment *Env = global_gsl_rng_env[get_std_thread_id()].Env;
-
-    compile_expr(v);
-    for (std_int_t i = envp - 1; i >= 0; i--) {
-        if (Env[i].var == var) {
-            switch (Env[i].var_kind) {
-                case VAR_ARG:
-                    gen_codeI(STOREA, Env[i].pos, 0, line);
-                    gen_code(POP, line);
-                    return;
-                case VAR_LOCAL:
-                    gen_codeI(STOREL_NC, Env[i].pos, 0, line);
-                    gen_code(POP, line);
-                    return;
-                default:
-                    break;
-            }
-        }
-    }
-    STD_LOG(ERR, "undefined variable '%s', please check line [%d]\n", var->name, line);
-    compile_error();
-}
-
-/**
  * compile_load_var
  * @brief   
  * @param   var
@@ -1117,14 +1051,6 @@ std_void_t compile_expr(lang_ast_t *p)
                 compile_error();
                 STD_LOG(ERR, "Not passed check, please check line: %d\n", p->debug_info.line);
             }
-            return;
-
-        case EQ_COPY_OP:
-            compile_store_copy_var(get_lang_ast_symbol(p->left), p->right, p->debug_info.line);
-            return;
-
-        case EQ_NOCOPY_OP:
-            compile_store_nocopy_var(get_lang_ast_symbol(p->left), p->right, p->debug_info.line);
             return;
 
         case PLUS_OP:

@@ -50,8 +50,7 @@ gen_code_table_t gen_code_table[] = {
         {"LOADL", LOADL},
         {"STOREA", STOREA},
         {"STOREL", STOREL},
-        {"STOREL_C", STOREL_C},
-        {"STOREL_NC", STOREL_NC},
+
         {"JUMP", JUMP},
         {"CALL", CALL},
         {"RET", RET},
@@ -231,8 +230,7 @@ STD_CALL std_char_t *gen_code_func(IN std_char_t *entry_name, IN std_int_t n_loc
             case LOADL:
             case STOREA:
             case STOREL:
-            case STOREL_C:
-            case STOREL_NC:
+
             case POPR:
 
             case PUSHA:

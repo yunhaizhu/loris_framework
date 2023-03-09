@@ -577,41 +577,6 @@ STD_CALL static inline std_void_t inline_execute_code_STOREL(IN std_int_t thread
 }
 
 /**
- * execute_code_STOREL_C
- * @brief
- * @param   Codes
- * @param   Stack
- * @param   Pc
- * @param   Fp
- * @return  STD_CALL static std_void_t
- */
-STD_CALL static inline std_void_t inline_execute_code_STOREL_C(IN std_int_t thread_id, const code_st *Codes, const std_u64_t *Stack, const std_int_t *Pc, const std_int_t *Fp)
-{
-    own_value_t object = Stack[*Fp - Codes[*Pc].i_operand];
-    own_value_t value = Top(thread_id);
-
-    set_VAR(object, NAN_BOX_Null, value);
-    vm[thread_id].gpr[11 + Codes[*Pc].i_operand] = Top(thread_id);
-}
-
-/**
- * execute_code_STOREL_NC
- * @brief
- * @param   Codes
- * @param   Stack
- * @param   Pc
- * @param   Fp
- * @return  STD_CALL static std_void_t
- */
-STD_CALL static inline std_void_t inline_execute_code_STOREL_NC(IN std_int_t thread_id, const code_st *Codes, const std_u64_t *Stack, const std_int_t *Pc, const std_int_t *Fp)
-{
-    own_value_t object = Stack[*Fp - Codes[*Pc].i_operand];
-
-    set_VAR(object, NAN_BOX_Null, Top(thread_id));
-    vm[thread_id].gpr[11 + Codes[*Pc].i_operand] = Top(thread_id);
-}
-
-/**
  * execute_code_JUMP
  * @brief
  * @param   Codes

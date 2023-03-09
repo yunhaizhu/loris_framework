@@ -80,8 +80,6 @@ STD_CALL std_void_t execute_code(IN std_int_t start_pc, IN std_bool_t reset)
             &&OP_CODE_LOADL,
             &&OP_CODE_STOREA,
             &&OP_CODE_STOREL,
-            &&OP_CODE_STOREL_C,
-            &&OP_CODE_STOREL_NC,
             &&OP_CODE_JUMP,
             &&OP_CODE_CALL,
             &&OP_CODE_RET,
@@ -244,14 +242,6 @@ OP_CODE_STOREA:
 
 OP_CODE_STOREL:
     inline_execute_code_STOREL(thread_id, Codes, Stack, Pc, Fp);
-    DISPATCH()
-
-OP_CODE_STOREL_C:
-    inline_execute_code_STOREL_C(thread_id, Codes, Stack, Pc, Fp);
-    DISPATCH()
-
-OP_CODE_STOREL_NC:
-    inline_execute_code_STOREL_NC(thread_id, Codes, Stack, Pc, Fp);
     DISPATCH()
 
 OP_CODE_JUMP:

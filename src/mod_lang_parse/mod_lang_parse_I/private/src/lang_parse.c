@@ -628,12 +628,6 @@ lang_ast_t *assignment(lang_state_t *state)
     if (lang_accept(state, '=')) {
         value = assignment(state);
         ret = make_lang_ast(EQ_OP, symbol, value, state->source_name, state->source_line);
-    } else if (lang_accept(state, TOKEN_CPEQ)) {
-        value = assignment(state);
-        ret = make_lang_ast(EQ_COPY_OP, symbol, value, state->source_name, state->source_line);
-    } else if (lang_accept(state, TOKEN_LKEQ)) {
-        value = assignment(state);
-        ret = make_lang_ast(EQ_NOCOPY_OP, symbol, value, state->source_name, state->source_line);
     } else if (lang_accept(state, TOKEN_Inp_MUL)) {
         value = assignment(state);
         ret = make_lang_ast(Inp_MUL_OP, symbol, value, state->source_name, state->source_line);

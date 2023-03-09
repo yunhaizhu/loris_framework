@@ -287,14 +287,6 @@ STD_CALL std_void_t dump_codes(IN const std_char_t *name, IN std_int_t start_pc)
                 emit_c_codes("inline_execute_code_STOREL(thread_id, Codes, Stack, Pc, Fp);\n");
                 break;
 
-            case STOREL_C:
-                emit_c_codes("inline_execute_code_STOREL_C(thread_id, Codes, Stack, Pc, Fp);\n");
-                break;
-
-            case STOREL_NC:
-                emit_c_codes("inline_execute_code_STOREL_NC(thread_id, Codes, Stack, Pc, Fp);\n");
-                break;
-
             case JUMP:
                 emit_c_codes("inline_execute_code_JUMP(thread_id, Codes, Pc);\n");
                 emit_c_codes("goto *jump_table[ *Pc ];\n");
