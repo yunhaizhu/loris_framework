@@ -22,6 +22,7 @@
 
 typedef enum lex_token_s {
     TOKEN_lang = 323,
+
     TOKEN_ID,
     TOKEN_NUM,
     TOKEN_U_NUM,
@@ -60,7 +61,9 @@ typedef enum lex_token_s {
     TOKEN_Inp_SUB,
     TOKEN_Inp_MUL,
     TOKEN_Inp_DIV,
-    TOKEN_Inp_MOD
+    TOKEN_Inp_MOD,
+
+    TOKEN_EOF
 } lex_token_t;
 
 typedef struct keyword_token_table_s {

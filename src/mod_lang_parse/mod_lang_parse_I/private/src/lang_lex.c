@@ -516,8 +516,10 @@ STD_CALL static inline std_int_t lex_handle_char(lang_state_t *state)
             return '%';
         case '"':
             return inline_handle_string(state);
+
         case EOF:
-            return 0;
+            return TOKEN_EOF;
+
         default:
             break;
     }

@@ -4,21 +4,17 @@ def test_array_1()
     var safe_2 = "string 2"
     var safe_array[3] = [1,2,"hello string"]
 
-    print("safe_array[0]:", safe_array[0], " safe_array[1]:", safe_array[1], " safe_array[2]:", safe_array[2])
     assert(safe_array[0] == 1, "safe_array[0] == 1")
     assert(safe_array[1] == 2, "safe_array[1] == 2")
     assert(safe_array[2] == "hello string", "safe_array[2] == hello string")
 
     safe_array[1] = safe_1
-    print("safe_array[0]:", safe_array[0], " safe_array[1]:", safe_array[1], " safe_array[2]:", safe_array[2])
     assert(safe_array[1] == "string 1", "safe_array[1] == string 1")
-
     assert(safe_1 == "string 1", "safe_1 == string 1")
 
     safe_array[1] = safe_2.get()
-    print("safe_array[0]:", safe_array[0], " safe_array[1]:", safe_array[1], " safe_array[2]:", safe_array[2])
     assert(safe_array[1] == "string 2", "safe_array[1] == string 2")
-    print("safe_2:", safe_2)
+    assert(safe_2 == "string 2", "safe_2 == string 2")
 }
 
 def test_array_2()
@@ -37,7 +33,7 @@ def test_array_2()
     assert(safe_array[4] == null, "safe_array[4] == null")
 
     safe_array2[0] = safe_array
-    print("safe_array2[0]:", safe_array2[0])
+    assert(safe_array2[0] == 0, "safe_array2[0] == 0")
 }
 
 def test_array()

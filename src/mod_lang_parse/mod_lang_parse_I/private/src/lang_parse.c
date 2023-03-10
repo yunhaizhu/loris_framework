@@ -774,7 +774,11 @@ lang_ast_t *block(lang_state_t *state, std_bool_t nl_skip)
 
     lang_expect(state, '}');
     if (!nl_skip) {
-        lang_expect(state, TOKEN_lang);
+        if (lang_accept(state, TOKEN_EOF)){
+            lang_expect(state, TOKEN_EOF);
+        }else {
+            lang_expect(state, TOKEN_lang);
+        }
     }
 
     block = make_lang_ast(BLOCK_STATEMENT, locals, stms, state->source_name, state->source_line);
