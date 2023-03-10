@@ -127,7 +127,7 @@ STD_CALL std_void_t add_VAR_with_tuple_type(IN const ownership_object_symbol_t *
     STD_ASSERT_RV(check_support_own_value_type(value) == STD_BOOL_TRUE, );
 
     new_value_type = get_own_value_type(value);
-    if (new_value_type == OWN_TYPE_OBJECT_STRING || new_value_type == OWN_TYPE_OBJECT_SYMBOL) {
+    if (new_value_type == OWN_TYPE_OBJECT_STRING || new_value_type == OWN_TYPE_OBJECT_SYMBOL || new_value_type == OWN_TYPE_OBJECT) {
         if (copy) {
             new_object_value = duplicate_ownership_value(symbol, value);
         } else {

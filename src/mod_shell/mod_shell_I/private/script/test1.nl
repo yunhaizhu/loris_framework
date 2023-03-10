@@ -7,7 +7,7 @@ def test1_var1()
     var safe_three
     var safe_four
 
-    print("safe_i:", safe_i, "safe_i.get():", safe_i.get())
+    print("safe_i:", safe_i, " safe_i.get():", safe_i.get())
     assert(safe_i == "string i", "safe_i == string i")
     assert(safe_i.get() == "string i", "safe_i.get() == string i")
 
@@ -15,19 +15,19 @@ def test1_var1()
     assert(safe_to.get() == 123, "safe_to.get() == 123")
 
     safe_three = "hello safe_three"
-    print("safe_to:", safe_to, "safe_three.get():", safe_three.get())
+    print("safe_to:", safe_to, " safe_three.get():", safe_three.get())
 
     safe_to = safe_i.get()
     print("safe_to:", safe_to)
-    assert(safe_to == "string i", "safe_to == string i")
+    assert(safe_to == "string i", " safe_to == string i")
 
     safe_to2 = safe_i
-    print("safe_to2:", safe_to2, "safe_i:", safe_i)
-    assert(safe_to2 == "string i", "safe_to2 linked to safe_i")
+    print("safe_to2:", safe_to2, " safe_i:", safe_i)
+    assert(safe_to2 == "string i", " safe_to2 set to safe_i")
 
     safe_three = safe_i
     print("safe_three:", safe_three)
-    assert(safe_three == "string i", "safe_three linked to safe_i")
+    assert(safe_three == "string i", " safe_three set to safe_i")
 
     safe_three.set("hello safe_three")
     print("safe_three:", safe_three)
@@ -102,8 +102,10 @@ def test1_var2()
 
 def test1_var()
 {
+    print("TEST VAR BEGIN")
     test1_var1()
     test1_var2()
+    print("TEST VAR END")
 }
 
 def main()

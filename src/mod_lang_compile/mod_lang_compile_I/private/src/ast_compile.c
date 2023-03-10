@@ -280,7 +280,7 @@ std_void_t compile_set_item_var(symbol_t *var, lang_ast_t *index_ast, lang_ast_t
         }
     }
 
-    STD_LOG(ERR, "undefined variable '%s', please check line [%d]\n", var->name, line);
+    STD_LOG(ERR, "undefined variable '%s', please check line [%d]\n", var?var->name:"", line);
     compile_error();
 }
 

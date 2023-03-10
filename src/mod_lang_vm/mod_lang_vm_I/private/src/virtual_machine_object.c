@@ -252,6 +252,8 @@ STD_CALL std_bool_t check_support_own_value_type(IN own_value_t value)
         case OWN_TYPE_ADDRESS:
         case OWN_TYPE_OBJECT_STRING:
             return STD_BOOL_TRUE;
+        case OWN_TYPE_OBJECT:
+            return STD_BOOL_TRUE;
         default:
             return STD_BOOL_FALSE;
     }

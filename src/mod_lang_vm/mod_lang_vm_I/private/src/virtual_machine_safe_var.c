@@ -201,10 +201,6 @@ STD_CALL static inline own_value_t inline_get_VAR_switch_tuple(IN own_value_t ro
         index_key = get_VAR(index_key, NAN_BOX_Null, STD_BOOL_FALSE);
         idx = (std_int_t) get_own_value_number(index_key);
     } else if (index_key != NAN_BOX_Null) {
-        value = find_VAR_with_tuple_type(get_own_value_object_symbol(root), index_key);
-        if (value != NAN_BOX_Null){
-            return value;
-        }
         if (get_own_value_type(index_key) != OWN_TYPE_NUMBER){
             return value;
         }

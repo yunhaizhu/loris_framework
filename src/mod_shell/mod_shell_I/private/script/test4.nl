@@ -3,14 +3,14 @@ def test4_hash1()
     var safe_1 = "string 1"
     var safe_2 = "string 2"
     var safe_3 = 1323
-    var safe_hash<> = <123321:"hello value", 223321:"hello value 2", 1323:safe_3>
     var value = 100
     var safe_i
     var safe_i2
+    var safe_hash<> = <123321:"hello value", 223321:"hello value 2", 1323:safe_3>
 
     print("testing safe_hash #0")
     print("safe_3:", safe_3)
-    assert(safe_3 == null, "safe_3 == null")
+    assert(safe_3 == 1323, "safe_3 == 1323")
 
     print("testing safe_hash #1")
     value = safe_hash.find_item(123321)
@@ -19,20 +19,19 @@ def test4_hash1()
     value = 100
 
     print("testing safe_hash #2")
-    value := safe_hash.find_item(123321)
+    value = safe_hash.find_item(1323)
     print("value:", value)
-    assert(value == "hello value", "value == hello value")
-    value = 100
+    assert(value == 1323, "value == 100")
 
     print("testing safe_hash #3")
-    value &= safe_hash.find_item(123321)
+    value = safe_hash.find_item(123321)
     print("value:", value)
-    assert(value == 100, "value == 100")
+    assert(value == "hello value", "value == hello value")
 
     print("testing safe_hash #4")
     safe_hash.add_key_item(safe_1, "hello safe_1")
-    value := safe_hash.find_item(safe_1)
-    print("value", value)
+    value = safe_hash.find_item(safe_1)
+    print("value:", value)
     assert(value == "hello safe_1", "value == hello safe_1")
 
     print("testing safe_hash #5")
@@ -72,7 +71,7 @@ def test4_hash_array()
     print("testing test4_hash_array #2")
     safe_hash.add_key_item(safe_1, safe_array2)
 
-    value3 &= safe_hash.find_item(safe_1)
+    value3 = safe_hash.find_item(safe_1)
     print("value:", value3[0])
     assert(value3[0] == 323423, "value3[0] == 323423")
 
@@ -81,16 +80,14 @@ def test4_hash_array()
     print("value:", value2[0])
     assert(value2[0] == 323423, "value2[0] == 323423")
 
-    value4 := safe_hash.find_item(safe_1)
+    value4 = safe_hash.find_item(safe_1)
     print("value4[0]:", value4[0])
     assert(value4[0] == 323423, "value4[0] == 323423")
 
     print("value4[2]:", value4[2])
-    print("value4[3]:", value4[2])
+    print("value4[3]:", value4[3])
     print("value[2]:", value[2])
 }
-
-
 
 def test4_hash()
 {

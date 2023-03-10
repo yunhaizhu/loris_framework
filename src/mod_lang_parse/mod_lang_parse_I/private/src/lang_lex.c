@@ -436,6 +436,12 @@ STD_CALL static inline std_int_t lex_handle_char(lang_state_t *state)
         case ',':
             lang_lex_next(state);
             return ',';
+        case ':':
+            lang_lex_next(state);
+            return ':';
+        case '&':
+            lang_lex_next(state);
+            return '&';
         case '(':
             lang_lex_next(state);
             return '(';
