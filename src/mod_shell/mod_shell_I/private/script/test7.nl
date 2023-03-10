@@ -23,7 +23,7 @@ def test7_for()
         }
 
         if (i == 1){
-            print("for i break", i)
+            print("for i break ", i)
             break
         }
 

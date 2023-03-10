@@ -443,18 +443,18 @@ STD_CALL std_void_t print_own_value(IN own_value_t value)
     }
 
     if (get_own_value_type(value) == OWN_TYPE_NUMBER) {
-        STD_LOG(DISPLAY, "%ld", get_own_value_number(value));
+        STD_LOG(DISPLAY, "%ld ", get_own_value_number(value));
     }else if (get_own_value_type(value) == OWN_TYPE_OBJECT) {
         ownership_object_t *obj = get_own_value_object(value);
         print_own_value(obj->value);
     }else if (get_own_value_type(value) == OWN_TYPE_OBJECT_STRING) {
-        STD_LOG(DISPLAY, "%s", get_own_value_object_string(value));
+        STD_LOG(DISPLAY, "'%s' ", get_own_value_object_string(value));
     } else if (get_own_value_type(value) == OWN_TYPE_ADDRESS) {
-        STD_LOG(DISPLAY, "%p", get_own_value_address(value));
+        STD_LOG(DISPLAY, "%p ", get_own_value_address(value));
     } else if (get_own_value_type(value) == OWN_TYPE_BOOL) {
-        STD_LOG(DISPLAY, "%s", get_own_value_bool(value) ? "true" : "false");
+        STD_LOG(DISPLAY, "%s ", get_own_value_bool(value) ? "true" : "false");
     } else if (get_own_value_type(value) == OWN_TYPE_OBJECT_SYMBOL) {
-        STD_LOG(DISPLAY, "%s", get_own_value_type_string(value));
+        STD_LOG(DISPLAY, "%s ", get_own_value_type_string(value));
     }
 }
 
