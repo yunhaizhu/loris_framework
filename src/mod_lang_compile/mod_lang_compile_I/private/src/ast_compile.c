@@ -1204,7 +1204,7 @@ std_void_t compile_expr(lang_ast_t *p)
             return;
 
         case CALL_OP:
-            compile_call_func(get_lang_ast_symbol(p->left), p->right, p->left->debug_info.line);
+            compile_call_func(get_lang_ast_symbol(p->left), p->right, p->left?p->left->debug_info.line:0);
             return;
 
         case DECLARE_VAR_OP:

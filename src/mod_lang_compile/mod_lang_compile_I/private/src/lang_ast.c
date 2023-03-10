@@ -90,6 +90,7 @@ STD_CALL lang_ast_t *make_lang_ast_symbol(IN std_char_t *name, IN std_char_t *so
     STD_LOG(DEBUG, "NEW ast:%p symbol:%p name:%s line:%d\n", ast, ast->symbol, get_lang_ast_symbol_name(ast), ast->debug_info.line);
     if (ast->symbol == NULL) {
         FREE(ast);
+
         return NULL;
     }
 

@@ -364,6 +364,9 @@ lang_ast_t *primary_expr(lang_state_t *state)
 
     if (lang_accept(state, TOKEN_ID)) {
         ast = make_lang_ast_symbol(state->value.string, state->source_name, state->source_line);
+        if (ast == NULL){
+            lang_lex_error(state, "parse error, need check\n");
+        }
     } else if (lang_accept(state, TOKEN_NULL)) {
         ast = make_lang_ast_number(0x7ff0000000000000|0x0008000000000000|0x0003000000000000, state->source_name, state->source_line);
     } else if (lang_accept(state, TOKEN_NUM)) {
