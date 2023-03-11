@@ -62,7 +62,7 @@ find ./src -name *.[ch] |xargs python3 add_doxygen_comment.py
 A MIPS virtual machine with JIT support is built on loris framework. 
 https://github.com/yunhaizhu/loris_framework_mips
 
-##test loris language
+## test loris language
 1. script("test_all.nl")
 
 ## COPYRIGHT

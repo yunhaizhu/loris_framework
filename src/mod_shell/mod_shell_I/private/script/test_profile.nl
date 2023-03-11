@@ -1,4 +1,4 @@
-def test_while()
+def test_profile()
 {
     var i
     var n
@@ -15,6 +15,6 @@ def test_while()
 
 def main()
 {
-    test_while()
+    test_profile()
 }
 
