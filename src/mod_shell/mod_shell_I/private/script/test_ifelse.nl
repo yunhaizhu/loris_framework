@@ -1,4 +1,4 @@
-def test12_ifelse()
+def test_ifelse()
 {
     var i = 324
 
@@ -15,7 +15,3 @@ def test12_ifelse()
     print(" no here")
 }
 
-def main()
-{
-    test12_ifelse()
-}

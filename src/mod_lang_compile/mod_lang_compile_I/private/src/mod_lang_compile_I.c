@@ -143,6 +143,18 @@ STD_CALL std_void_t mod_lang_compile_I_reset(IN mod_lang_compile_t * p_m)
     compile_reset();
 }
 
+/**
+ * mod_lang_compile_I_add_func
+ * @brief
+ * @param   p_m
+ * @param   func_name
+ * @return  STD_CALL             std_void_t
+ */
+STD_CALL std_void_t mod_lang_compile_I_add_func(IN mod_lang_compile_t * p_m, IN std_char_t * func_name)
+{
+    add_require_func(func_name);
+}
+
 struct mod_lang_compile_ops_st mod_lang_compile_I_ops = {
         mod_lang_compile_I_init,
         mod_lang_compile_I_cleanup,
@@ -153,6 +165,7 @@ struct mod_lang_compile_ops_st mod_lang_compile_I_ops = {
         mod_lang_compile_I_expr,
         mod_lang_compile_I_generated_bytecode,
         mod_lang_compile_I_reset,
+        mod_lang_compile_I_add_func,
 };
 
 /**

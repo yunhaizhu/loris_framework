@@ -1,4 +1,4 @@
-def test14_andor1()
+def test_andor1()
 {
     var a1 = 1
     var a2 = 0
@@ -10,7 +10,7 @@ def test14_andor1()
     }
 }
 
-def test14_andor2()
+def test_andor2()
 {
     var a1 = 1
     var a2 = 0
@@ -22,7 +22,7 @@ def test14_andor2()
     }
 }
 
-def test14_math3()
+def test_math3()
 {
     var a1 = 1
     var a2 = 0
@@ -53,14 +53,11 @@ def test14_math3()
     a2 = 0x343a4425AF
 }
 
-def test14_andor()
+def test_andor_math()
 {
-    test14_andor1()
-    test14_andor2()
-    test14_math3()
+    test_andor1()
+    test_andor2()
+    test_math3()
 }
 
-def main()
-{
-    test14_andor()
-}
+

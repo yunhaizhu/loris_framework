@@ -1,4 +1,4 @@
-def test13_make_json(var ret_json_string)
+def test_make_json(var ret_json_string)
 {
     var u64_up_key
     var u64_down_key
@@ -27,7 +27,7 @@ def test13_make_json(var ret_json_string)
 #    ret_json_string = json_args
 }
 
-def test13_parse_json(var json_string)
+def test_parse_json(var json_string)
 {
     var u64_up_key
     var u64_down_key
@@ -46,7 +46,7 @@ def test13_parse_json(var json_string)
     print("u64_up_key:", u64_up_key, "u64_down_key:", u64_down_key, "p_data:", p_data, "p_address:", p_address)
 }
 
-def test13_make_json2()
+def test_make_json2()
 {
     var name_value_hash<> = <>
     var json_args
@@ -55,22 +55,17 @@ def test13_make_json2()
     print("json_args", json_args)
 }
 
-def test13_make_parse_json()
+def test_make_parse_json()
 {
     var ret_json_string
-    var ret
+    var ret ="hello"
 
-    test13_make_json(ret_json_string)
+    test_make_json(ret_json_string)
     print("test13_make_parse_json ret_json_string:", ret_json_string)
-    test13_parse_json(ret_json_string)
+    test_parse_json(ret_json_string)
 
     print("ret:", ret)
-    test13_parse_json(ret)
+    test_parse_json(ret)
 
-    test13_make_json2()
-}
-
-def main()
-{
-    test13_make_parse_json()
+    test_make_json2()
 }

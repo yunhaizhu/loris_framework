@@ -1,4 +1,4 @@
-def test10_return1()
+def test_return1()
 {
     var key = 0
     var data
@@ -12,7 +12,7 @@ def test10_return1()
     print("data:", data)
 }
 
-def test10_return2()
+def test_return2()
 {
     var key = 0
     var data
@@ -26,17 +26,14 @@ def test10_return2()
     print("data:", data)
 }
 
-def test10_return()
+def test_return()
 {
     var ret
 
-    test10_return1()
-    test10_return2()
+    test_return1()
+    test_return2()
 
     print("ret:", ret)
 }
 
-def main()
-{
-    test10_return()
-}
+

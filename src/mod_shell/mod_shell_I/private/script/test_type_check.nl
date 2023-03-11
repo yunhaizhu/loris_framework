@@ -16,11 +16,9 @@ def test_random_number(var a1:{"OWN_TYPE_NUMBER"}, var a2:{"OWN_TYPE_STRING", "O
         random_string(32, key)
         print("random key", i, key)
     }
-
-    random_string("32", key)
 }
 
-def test15_type_check()
+def test_type_check()
 {
     var a1 = 100
 
@@ -31,7 +29,3 @@ def test15_type_check()
     test_random_number(a1, true)
 }
 
-def main()
-{
-    test15_type_check()
-}

@@ -10,3 +10,4 @@ std_void_t cmd(IN lang_ast_t *cmd);
 std_void_t expr(IN lang_ast_t *cmd);
 std_char_t *generated_bytecode(IN std_char_t *file_name);
 std_void_t reset();
+std_void_t add_func(IN std_char_t *func_name);

@@ -1,4 +1,4 @@
-def test11_while()
+def test_while()
 {
     var safe_tuple{} = {1,2,"hello string"}
     var i = 0
@@ -15,9 +15,4 @@ def test11_while()
         }
     }
     print("test end")
-}
-
-def main()
-{
-    test11_while()
 }

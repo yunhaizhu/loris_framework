@@ -87,7 +87,3 @@ def test_var()
     print("TEST VAR END")
 }
 
-def main()
-{
-    test_var()
-}

@@ -294,5 +294,12 @@ STD_CALL std_void_t print_lang_ast(IN lang_ast_t *p);
  */
 STD_CALL std_void_t clear_lang_ast(IN lang_ast_t *p);
 
+/**
+ * add_require_func
+ * @brief
+ * @param   func_name
+ * @return  STD_CALL std_void_t
+ */
+STD_CALL std_void_t add_require_func(std_char_t *func_name);
 
 #endif//NONCLEDB_LANG_AST_H

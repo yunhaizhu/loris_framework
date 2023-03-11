@@ -50,6 +50,23 @@ std_char_t *global_func_extern[FUNC_EXTERN_EXTERN_LEN] = {"print",
                                                           "check_type"};
 std_int_t global_func_extern_idx = FUNC_EXTERN_LEN;
 
+std_char_t *global_func_custom_extern[FUNC_EXTERN_EXTERN_LEN];
+std_int_t global_func_custom_extern_idx = 0;
+
+/**
+ * add_require_func
+ * @brief
+ * @param   func_name
+ * @return  STD_CALL std_void_t
+ */
+STD_CALL std_void_t add_require_func(std_char_t *func_name)
+{
+    std_char_t *name = strdup(func_name);
+
+    std_safe_strip_chars(name, '"');
+    global_func_custom_extern[global_func_custom_extern_idx++] = name;
+}
+
 /**
  * parse_error_need_auto_free
  * @brief   
@@ -257,6 +274,15 @@ STD_CALL symbol_t *lookup_lang_ast_symbol(IN std_char_t *name, IN std_bool_t che
         if (0 == strcmp(name, global_func_extern[i])) {
             extend_func = STD_BOOL_FALSE;
             create_id = STD_BOOL_TRUE;
+            break;
+        }
+    }
+
+    for (std_int_t i = 0; i < global_func_custom_extern_idx; ++i) {
+        if (0 == strcmp(name, global_func_custom_extern[i]) && strlen(name) == strlen(global_func_custom_extern[i])) {
+            extend_func = STD_BOOL_FALSE;
+            create_id = STD_BOOL_TRUE;
+            create_func = STD_BOOL_TRUE;
             break;
         }
     }

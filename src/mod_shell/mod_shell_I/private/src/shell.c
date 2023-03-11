@@ -37,33 +37,6 @@ extern mod_lang_parse_t *p_global_mod_lang_parse;
 extern mod_lang_compile_t *p_global_mod_lang_compile;
 extern mod_lang_vm_t *p_global_mod_lang_vm;
 
-#define FUNC_EXTERN_LEN 22
-#define FUNC_EXTERN_EXTERN_LEN 100
-
-std_char_t *global_func_extern[FUNC_EXTERN_EXTERN_LEN] = {"print",
-                                                          "install",
-                                                          "uninstall",
-                                                          "start",
-                                                          "stop",
-                                                          "show",
-                                                          "help",
-                                                          "grace_exit",
-                                                          "exit",
-                                                          "run",
-                                                          "ps",
-                                                          "assert",
-                                                          "random_number",
-                                                          "random_address",
-                                                          "random_string",
-                                                          "make_json",
-                                                          "parse_json",
-                                                          "create_instance",
-                                                          "delete_instance",
-                                                          "debug",
-                                                          "convert",
-                                                          "check_type"};
-std_int_t global_func_extern_idx = FUNC_EXTERN_LEN;
-
 /**
  * cmd_debug
  * @brief   
@@ -340,7 +313,6 @@ STD_CALL std_rv_t compile_file_body(IN const std_char_t *name, IN std_char_t *bo
 {
     std_rv_t ret;
 
-    mod_lang_compile_reset(p_global_mod_lang_compile);
     ret = mod_lang_parse_parse(p_global_mod_lang_parse, (std_char_t *) name, body, std_safe_strlen(name, BUF_SIZE_8192 * 10));
 
     if (ret != STD_RV_SUC) {
@@ -402,7 +374,7 @@ STD_CALL std_bool_t handle_import_compile(IN const std_char_t *line)
 STD_CALL std_bool_t handle_require_compile(IN const std_char_t *line)
 {
     std_char_t *require_file;
-    const std_char_t *token;
+    std_char_t *token;
     std_char_t *save_ptr;
     require_file = strstr(line, "require");
 
@@ -413,7 +385,7 @@ STD_CALL std_bool_t handle_require_compile(IN const std_char_t *line)
 
         token = strtok_r(require_file, ",", &save_ptr);
         while (token != NULL) {
-            global_func_extern[global_func_extern_idx++] = strdup(token);
+            mod_lang_compile_add_func(p_global_mod_lang_compile, token);
 
             token = strtok_r(NULL, ",", &save_ptr);
         }
@@ -598,6 +570,8 @@ STD_CALL std_void_t strip_name(IN std_char_t *name)
  */
 std_rv_t cmd_script(IN std_char_t *name)
 {
+    mod_lang_compile_reset(p_global_mod_lang_compile);
+
     STD_ASSERT_RV_WARN(cmd_compile_file(name) == STD_RV_SUC, STD_RV_ERR_FAIL);
     STD_ASSERT_RV_WARN(cmd_execute(name) == STD_RV_SUC, STD_RV_ERR_FAIL);
 

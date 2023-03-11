@@ -39,14 +39,9 @@ def test_array_2()
 def test_array()
 {
     print("TEST ARRAY BEGIN")
-
     test_array_1()
     test_array_2()
-
     print("TEST ARRAY END")
 }
 
-def main()
-{
-    test_array()
-}
+
