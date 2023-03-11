@@ -437,6 +437,7 @@ STD_CALL std_void_t print_own_value(IN own_value_t value)
     if (get_own_value_type(value) == OWN_TYPE_OBJECT_SYMBOL) {
         value = get_VAR(value, NAN_BOX_Null, STD_BOOL_FALSE);
     }
+
     if (value == NAN_BOX_Null) {
         STD_LOG(DISPLAY, "null");
         return;

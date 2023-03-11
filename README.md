@@ -64,6 +64,11 @@ https://github.com/yunhaizhu/loris_framework_mips
 
 ## test loris language
 1. script("test_all.nl")
+2. script("test_var_math.nl")
+
+## test leetcode in loris_language
+1. script("leetcode/two_sum.nl")
+2. script("leetcode/two_sum_2.nl")
 
 ## COPYRIGHT
 GNU General Public License, version 3

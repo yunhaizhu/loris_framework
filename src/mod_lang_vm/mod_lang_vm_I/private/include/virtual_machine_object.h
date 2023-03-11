@@ -360,8 +360,8 @@ STD_CALL static inline std_64_t get_own_value_number(IN const own_value_t value)
 #ifdef NAN_BOX
     std_u64_t isNaN = NAN_BOX_SIGNATURE_NAN & value;
 
-    assert(isNaN != NAN_BOX_SIGNATURE_NAN);
-
+//    assert(isNaN != NAN_BOX_SIGNATURE_NAN);
+//DEBUG HIGH
     return *(std_64_t *) (&value);
 #else
     return value.u.i64;
@@ -547,11 +547,38 @@ STD_CALL static inline own_value_type_t get_own_value_type(IN own_value_t value)
     std_u64_t signature;
     std_u64_t isNaN = NAN_BOX_SIGNATURE_NAN & value;
 
+//    STD_LOG(ERR, ":%x %ld \n", value, value);
+//    STD_LOG(ERR, "value 0x%04x %04x %04x %04x\n",
+//            (unsigned)(value >> 48ULL) & 0xFFFF,
+//            (unsigned)(value >> 32ULL) & 0xFFFF,
+//            (unsigned)(value >> 16) & 0xFFFF,
+//            (unsigned)value & 0xFFFF);
+//
+//    STD_LOG(ERR, "isNaN 0x%04x %04x %04x %04x\n",
+//            (unsigned)(isNaN >> 48ULL) & 0xFFFF,
+//            (unsigned)(isNaN >> 32ULL) & 0xFFFF,
+//            (unsigned)(isNaN >> 16) & 0xFFFF,
+//            (unsigned)isNaN & 0xFFFF);
+//
+//    STD_LOG(ERR, "NAN_BOX_SIGNATURE_NAN 0x%04x %04x %04x %04x\n",
+//            (unsigned)(NAN_BOX_SIGNATURE_NAN >> 48ULL) & 0xFFFF,
+//            (unsigned)(NAN_BOX_SIGNATURE_NAN >> 32ULL) & 0xFFFF,
+//            (unsigned)(NAN_BOX_SIGNATURE_NAN >> 16) & 0xFFFF,
+//            (unsigned)NAN_BOX_SIGNATURE_NAN & 0xFFFF);
+
     if (isNaN != NAN_BOX_SIGNATURE_NAN) {
         return OWN_TYPE_NUMBER;
     }
 
     signature = value & NAN_BOX_MASK_SIGNATURE;
+
+
+//    STD_LOG(ERR, "signature 0x%04x %04x %04x %04x\n",
+//            (unsigned)(signature >> 48ULL) & 0xFFFF,
+//            (unsigned)(signature >> 32ULL) & 0xFFFF,
+//            (unsigned)(signature >> 16) & 0xFFFF,
+//            (unsigned)signature & 0xFFFF);
+
     switch (signature) {
         case NAN_BOX_SIGNATURE_NAN:
             return OWN_TYPE_DOUBLE;
@@ -568,6 +595,9 @@ STD_CALL static inline own_value_type_t get_own_value_type(IN own_value_t value)
             return OWN_TYPE_OBJECT_SYMBOL;
         case NAN_BOX_SIGNATURE_OBJECT_STRING:
             return OWN_TYPE_OBJECT_STRING;
+        case NAN_BOX_MASK_SIGNATURE:
+            //such as -2, < 0
+            return OWN_TYPE_NUMBER;
         default:
             return OWN_TYPE_NULL;
     }

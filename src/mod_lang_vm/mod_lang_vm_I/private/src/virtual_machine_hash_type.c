@@ -155,7 +155,9 @@ STD_CALL own_value_t find_VAR_with_hash_type(IN const ownership_object_symbol_t 
 
     print_own_value_to_buf(key, key_buf, STD_BOOL_FALSE);
     ret = (own_value_t )std_lock_free_key_hash_find(hash_head, key_buf, std_safe_strlen(key_buf, sizeof(key_buf)));
-
+    if (ret == (own_value_t )NULL){
+        ret = NAN_BOX_Null;
+    }
     return  ret;
 }
 
