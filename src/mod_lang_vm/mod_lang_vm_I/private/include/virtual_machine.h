@@ -20,7 +20,7 @@
 #include "virtual_machine_safe_var.h"
 
 #define EXEC_COMPILED_CODE 0
-#define DUMP_EXEC_CODE 0
+#define DUMP_EXEC_CODE 1
 
 #define MAX_CODE 2000 * 3
 #define MAX_LABEL 200 * 2

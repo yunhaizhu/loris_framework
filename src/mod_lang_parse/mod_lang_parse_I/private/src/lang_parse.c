@@ -511,7 +511,12 @@ lang_ast_t *additive(lang_state_t *state)
             ret = make_lang_ast(PLUS_OP, ret, expr2, state->source_name, state->source_line);
         } else if (lang_accept(state, '-')) {
             expr2 = multiplicative(state);
-            ret = make_lang_ast(MINUS_OP, ret, expr2, state->source_name, state->source_line);
+            if (expr1 == NULL && expr2->op == NUMBER_OP){
+                expr2->number.i64 = 0 - expr2->number.i64;
+                ret = expr2;
+            }else {
+                ret = make_lang_ast(MINUS_OP, ret, expr2, state->source_name, state->source_line);
+            }
         } else {
             break;
         }
