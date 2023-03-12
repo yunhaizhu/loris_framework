@@ -8,7 +8,7 @@ def roman_to_int(var string, var ret)
     var array_max
     var hash_table<> = <"I":1, "V":5, "X":10, "L":50, "C":100, "D":500, "M":1000>
 
-    make_array(string, ret_array)
+    string_to_array(string, ret_array)
 
     array_max = ret_array.count_item()
 

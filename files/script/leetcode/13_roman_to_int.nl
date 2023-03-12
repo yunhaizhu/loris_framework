@@ -7,7 +7,7 @@ def roman_to_int(var string, var ret)
     var ans = 0
     var max
 
-    make_array(string, ret_array)
+    string_to_array(string, ret_array)
 
     max = ret_array.count_item()
 

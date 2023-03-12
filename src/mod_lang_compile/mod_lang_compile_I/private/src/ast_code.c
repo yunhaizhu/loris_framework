@@ -276,7 +276,7 @@ STD_CALL std_char_t *gen_code_func(IN std_char_t *entry_name, IN std_int_t n_loc
 
             case LOAD_LIB:
             case PUSHS:
-                snprintf(buffer + buffer_index, BUF_SIZE_4096 - buffer_index, "%s [%d]", gen_codes[i].soperand, gen_codes[i].line);
+                snprintf(buffer + buffer_index, BUF_SIZE_4096 - buffer_index, "[%s] [%d]", gen_codes[i].soperand, gen_codes[i].line);
                 buffer_index = std_safe_strlen(buffer, BUF_SIZE_4096);
                 break;
 

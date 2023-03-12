@@ -33,8 +33,9 @@ STD_CALL static std_rv_t read_code_PUSHS(IN code_st *Codes, IN const std_int_t *
     std_int_t source_line = 0;
     own_value_t value;
 
-    STD_ASSERT_RV(sscanf(line, "%s \"%[^\"] \" [%d]", opcode_name, string, &source_line) == 3, STD_RV_ERR_FAIL);
+    STD_ASSERT_RV(sscanf(line, "%s [%[^]]] [%d]", opcode_name, string, &source_line) == 3, STD_RV_ERR_FAIL);
 
+    std_safe_strip_chars(string, '"');
     value = make_own_value_object_string(string);
     Codes[*n_codes].i_operand = value;
     Codes[*n_codes].line = source_line;

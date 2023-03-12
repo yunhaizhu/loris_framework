@@ -63,20 +63,22 @@ A MIPS virtual machine with JIT support is built on loris framework.
 https://github.com/yunhaizhu/loris_framework_mips
 
 ## loris language
-1. Loris is a memory safe script language, can provide memory safe like RUST, but easy to use like Python. 
+1. Loris is a ownership based memory safe script language, can provide memory safe like RUST, and easy to use like Python. 
 2. Every variable has a ownership, only the owner can handle the variable. 
 
 ## test loris language
 1. script("test_all.nl")
 2. script("test_var_math.nl")
-3. script("test_make_array.nl")
+3. script("test_string_to_array.nl")
+4. script("test_array_to_string.nl")
 
 ## test leetcode in loris_language
 1. script("leetcode/1_two_sum.nl")
 2. script("leetcode/1_two_sum_2.nl")
 3. script("leetcode/9_palindrome_number.nl")
-4. script("leetcode/13_roman_to_int.nl")
-5. script("leetcode/13_roman_to_int_2.nl")
+4. script("leetcode/12_int_to_roman.nl")
+5. script("leetcode/13_roman_to_int.nl")
+6. script("leetcode/13_roman_to_int_2.nl")
 
 ## COPYRIGHT
 GNU General Public License, version 3

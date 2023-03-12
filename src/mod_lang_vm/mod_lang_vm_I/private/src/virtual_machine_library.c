@@ -528,7 +528,7 @@ STD_CALL std_void_t library_delete_instance(IN std_int_t thread_id, IN std_int_t
  * @param   args
  * @return  STD_CALL std_void_t
  */
-STD_CALL std_void_t library_make_array(IN std_int_t thread_id, IN std_int_t args)
+STD_CALL std_void_t library_string_to_array(IN std_int_t thread_id, IN std_int_t args)
 {
     own_value_t obj_string;
     std_char_t *string_string = NULL;
@@ -565,6 +565,45 @@ STD_CALL std_void_t library_make_array(IN std_int_t thread_id, IN std_int_t args
     }
 }
 
+/**
+ * library_array_to_string
+ * @brief
+ * @param   thread_id
+ * @param   args
+ * @return  STD_CALL std_void_t
+ */
+STD_CALL std_void_t library_array_to_string(IN std_int_t thread_id, IN std_int_t args)
+{
+    own_value_t obj_array;
+    std_char_t tmp_buffer[BUF_SIZE_1024] = "\0";
+    own_value_t ret_obj;
+    std_int_t array_size;
+
+    ret_obj = Pop(thread_id);
+
+    obj_array = Pop(thread_id);
+    obj_array = get_VAR(obj_array, NAN_BOX_Null, STD_BOOL_FALSE);
+
+    STD_ASSERT_RV(ret_obj != NAN_BOX_Null, );
+    STD_ASSERT_RV(obj_array != NAN_BOX_Null, );
+
+    STD_ASSERT_RV(get_own_value_type(obj_array) == OWN_TYPE_OBJECT_SYMBOL, );
+
+    std_int_t obj_item_type = get_own_value_object_symbol(obj_array)->env_value.symbol_type;
+    STD_ASSERT_RV(obj_item_type == array_type, );
+    array_size = get_VAR_total_with_array_type(get_own_value_object_symbol(obj_array));
+
+    for (std_int_t i = 0; i < array_size; i++){
+        own_value_t item_value;
+        std_char_t item_string[BUF_SIZE_128];
+
+        item_value = get_VAR(obj_array, i, STD_BOOL_FALSE);
+        print_own_value_to_buf(item_value, item_string, STD_BOOL_FALSE);
+        strcat(tmp_buffer, item_string);
+    }
+
+    set_VAR(ret_obj, NAN_BOX_Null, make_own_value_object_string(tmp_buffer));
+}
 
 /**
  * library_register
@@ -598,5 +637,6 @@ STD_CALL std_void_t library_register()
 
     library_func_register(&register_id[thread_id], "create_instance", 3, library_create_instance);
     library_func_register(&register_id[thread_id], "delete_instance", 2, library_delete_instance);
-    library_func_register(&register_id[thread_id], "make_array", 2, library_make_array);
+    library_func_register(&register_id[thread_id], "string_to_array", 2, library_string_to_array);
+    library_func_register(&register_id[thread_id], "array_to_string", 2, library_array_to_string);
 }
