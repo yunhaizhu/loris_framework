@@ -21,7 +21,7 @@ def test_make_array()
     }
 }
 
-#def main()
-#{
-#    test_make_array()
-#}
+def main()
+{
+    test_make_array()
+}

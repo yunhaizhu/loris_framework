@@ -62,6 +62,10 @@ find ./src -name *.[ch] |xargs python3 add_doxygen_comment.py
 A MIPS virtual machine with JIT support is built on loris framework. 
 https://github.com/yunhaizhu/loris_framework_mips
 
+## loris language
+1. Loris is a memory safe script language, can provide memory safe like RUST, but easy to use like Python. 
+2. Every variable has a ownership, only the owner can handle the variable. 
+
 ## test loris language
 1. script("test_all.nl")
 2. script("test_var_math.nl")
