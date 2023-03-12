@@ -21,7 +21,7 @@ std_lock_free_key_hash_t *global_symbol_hash = NULL;
 std_bool_t create_id = STD_BOOL_FALSE;
 std_bool_t create_func = STD_BOOL_FALSE;
 std_char_t *function_name = NULL;
-#define FUNC_EXTERN_LEN 22
+#define FUNC_EXTERN_LEN 23
 #define FUNC_EXTERN_EXTERN_LEN 100
 std_bool_t parse_no_error = STD_BOOL_FALSE;
 
@@ -45,6 +45,7 @@ std_char_t *global_func_extern[FUNC_EXTERN_EXTERN_LEN] = {"print",
                                                           "parse_json",
                                                           "create_instance",
                                                           "delete_instance",
+                                                          "make_array",
                                                           "debug",
                                                           "convert",
                                                           "check_type"};

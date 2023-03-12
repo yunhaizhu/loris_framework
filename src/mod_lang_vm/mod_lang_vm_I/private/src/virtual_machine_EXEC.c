@@ -1054,7 +1054,12 @@ STD_CALL static inline std_void_t inline_execute_code_COUNT_ITEM(IN std_int_t th
         object_item = object;
     }
 
-    ret = make_own_value_number(get_VAR_total_with_tuple_type(get_own_value_object_symbol(object_item)));
+    std_int_t obj_item_type = get_own_value_object_symbol(object_item)->env_value.symbol_type;
+    if ( obj_item_type == array_type) {
+        ret = make_own_value_number(get_VAR_total_with_array_type(get_own_value_object_symbol(object_item)));
+    }else if (obj_item_type == tuple_type){
+        ret = make_own_value_number(get_VAR_total_with_tuple_type(get_own_value_object_symbol(object_item)));
+    }
 
     Push(thread_id, ret);
 }

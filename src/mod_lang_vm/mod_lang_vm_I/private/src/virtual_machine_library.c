@@ -522,6 +522,51 @@ STD_CALL std_void_t library_delete_instance(IN std_int_t thread_id, IN std_int_t
 
 
 /**
+ * library_make_array
+ * @brief
+ * @param   thread_id
+ * @param   args
+ * @return  STD_CALL std_void_t
+ */
+STD_CALL std_void_t library_make_array(IN std_int_t thread_id, IN std_int_t args)
+{
+    own_value_t obj_string;
+    std_char_t *string_string = NULL;
+
+    own_value_t ret_obj;
+    ownership_object_symbol_t *ret_symbol;
+
+    ret_obj = Pop(thread_id);
+    ret_obj = get_VAR(ret_obj, NAN_BOX_Null, STD_BOOL_FALSE);
+
+    obj_string = Pop(thread_id);
+    obj_string = get_VAR(obj_string, NAN_BOX_Null, STD_BOOL_FALSE);
+
+    STD_ASSERT_RV(ret_obj != NAN_BOX_Null, );
+    STD_ASSERT_RV(obj_string != NAN_BOX_Null, );
+
+    STD_ASSERT_RV(get_own_value_type(obj_string) == OWN_TYPE_OBJECT_STRING, );
+
+    string_string = get_own_value_object_string(obj_string);
+    STD_LOG(INFO, "string_string:%s\n", string_string);
+
+    ret_symbol = get_own_value_object_symbol(ret_obj);
+    del_VARS(ret_obj, STD_BOOL_TRUE);
+
+    declare_VAR_with_array_type(ret_symbol, (std_int_t)strlen(string_string), NAN_BOX_Null);
+
+    for (std_int_t i = 0; i < strlen(string_string); i++){
+        own_value_t own_value;
+        std_char_t tmp_char[BUF_SIZE_32] = "\0";
+
+        sprintf(tmp_char, "%c", string_string[i]);
+        own_value = make_own_value_object_string(tmp_char);
+        set_VAR(ret_obj, i, own_value);
+    }
+}
+
+
+/**
  * library_register
  * @brief   
  * @return  STD_CALL std_void_t
@@ -553,4 +598,5 @@ STD_CALL std_void_t library_register()
 
     library_func_register(&register_id[thread_id], "create_instance", 3, library_create_instance);
     library_func_register(&register_id[thread_id], "delete_instance", 2, library_delete_instance);
+    library_func_register(&register_id[thread_id], "make_array", 2, library_make_array);
 }

@@ -44,4 +44,8 @@ def test_array()
     print("TEST ARRAY END")
 }
 
+def main()
+{
+    test_array()
+}
 

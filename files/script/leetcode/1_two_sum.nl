@@ -1,4 +1,3 @@
-load_lib "shell_lib"
 
 def two_sum(var nums, var nums_max, var target, var ret_i, var ret_j)
 {

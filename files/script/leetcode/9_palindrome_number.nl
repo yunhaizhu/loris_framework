@@ -1,4 +1,3 @@
-load_lib "shell_lib"
 
 def palindrome_number(var num, var ret)
 {
