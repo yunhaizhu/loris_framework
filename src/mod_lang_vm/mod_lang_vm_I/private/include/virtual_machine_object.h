@@ -360,6 +360,10 @@ STD_CALL static inline std_64_t get_own_value_number(IN const own_value_t value)
 #ifdef NAN_BOX
     std_u64_t isNaN = NAN_BOX_SIGNATURE_NAN & value;
 
+    if (value == NAN_BOX_True || value == NAN_BOX_False){
+        return value == NAN_BOX_True ? STD_BOOL_TRUE : STD_BOOL_FALSE;
+    }
+
 //    assert(isNaN != NAN_BOX_SIGNATURE_NAN);
 //DEBUG HIGH
     return *(std_64_t *) (&value);
