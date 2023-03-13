@@ -74,6 +74,7 @@ https://github.com/yunhaizhu/loris_framework_mips
 5. script("test_hash_link.nl")
 6. script("leetcode/array_to_single_list.nl")
 7. script("test_or3.nl")
+8. script("lib/hash_to_stack.nl")
 
 ## test leetcode in loris_language
 1. script("leetcode/1_two_sum.nl")
@@ -84,6 +85,7 @@ https://github.com/yunhaizhu/loris_framework_mips
 6. script("leetcode/13_roman_to_int_2.nl")
 7. script("leetcode/2_add_two_number.nl")
 8. script("leetcode/14_longest_common_prefix.nl")
+9. script("leetcode/20_valid_parentness.nl")
 
 ## COPYRIGHT
 GNU General Public License, version 3

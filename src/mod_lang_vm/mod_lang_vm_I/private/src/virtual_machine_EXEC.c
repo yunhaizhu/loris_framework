@@ -505,13 +505,16 @@ STD_CALL static inline std_void_t inline_execute_code_LOADA(IN std_int_t thread_
 {
     own_value_t obj_value;
 
-    if (likely(Codes[*Pc].gpr_idx != 0 && vm[thread_id].gpr[Codes[*Pc].gpr_idx] != NAN_BOX_Null)) {
-        obj_value = vm[thread_id].gpr[Codes[*Pc].gpr_idx];
-    } else {
+//    if (likely(Codes[*Pc].gpr_idx != 0 && vm[thread_id].gpr[Codes[*Pc].gpr_idx] != NAN_BOX_Null)) {
+//        obj_value = vm[thread_id].gpr[Codes[*Pc].gpr_idx];
+//    } else
+
+    //performance issue.
+    {
         own_value_t object = Codes[*Pc].i_operand;
-        Codes[*Pc].gpr_idx = (std_int_t)(3 + Codes[*Pc].i_operand_ex);
+//        Codes[*Pc].gpr_idx = (std_int_t)(3 + Codes[*Pc].i_operand_ex);
         obj_value = get_VAR(object, NAN_BOX_Null, STD_BOOL_FALSE);
-        vm[thread_id].gpr[Codes[*Pc].gpr_idx] = obj_value;
+//        vm[thread_id].gpr[Codes[*Pc].gpr_idx] = obj_value;
     }
 
     Push(thread_id, obj_value);
@@ -532,13 +535,14 @@ STD_CALL static inline std_void_t inline_execute_code_LOADL(IN std_int_t thread_
 {
     own_value_t obj_value;
 
-    if (likely(Codes[*Pc].gpr_idx != 0 && vm[thread_id].gpr[Codes[*Pc].gpr_idx] != NAN_BOX_Null)) {
-        obj_value = vm[thread_id].gpr[Codes[*Pc].gpr_idx];
-    } else {
+//    if (likely(Codes[*Pc].gpr_idx != 0 && vm[thread_id].gpr[Codes[*Pc].gpr_idx] != NAN_BOX_Null)) {
+//        obj_value = vm[thread_id].gpr[Codes[*Pc].gpr_idx];
+//    } else
+    {
         own_value_t object = Codes[*Pc].i_operand;
-        Codes[*Pc].gpr_idx = (std_int_t)(11 + Codes[*Pc].i_operand_ex);
+//        Codes[*Pc].gpr_idx = (std_int_t)(11 + Codes[*Pc].i_operand_ex);
         obj_value = get_VAR(object, NAN_BOX_Null, STD_BOOL_FALSE);
-        vm[thread_id].gpr[Codes[*Pc].gpr_idx] = obj_value;
+//        vm[thread_id].gpr[Codes[*Pc].gpr_idx] = obj_value;
     }
 
     Push(thread_id, obj_value);

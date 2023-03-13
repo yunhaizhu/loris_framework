@@ -72,8 +72,13 @@ def longest_common_prefix(var strs, var ret_common_prefix)
 def main()
 {
     var strs[3] = ["flower","flow","flight"]
+    var strs2[3] = ["dog","racecar","car"]
     var ret_longest_common_prefix
 
     longest_common_prefix(strs, ret_longest_common_prefix)
+    print("ret_longest_common_prefix:", ret_longest_common_prefix)
+
+
+    longest_common_prefix(strs2, ret_longest_common_prefix)
     print("ret_longest_common_prefix:", ret_longest_common_prefix)
 }
