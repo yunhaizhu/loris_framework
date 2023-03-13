@@ -25,6 +25,7 @@ def longest_common_prefix(var strs, var ret_common_prefix)
     var j
     var prefix_str
     var prefix_array[1]
+    var strs_array_hash<>
 
     strs_max = strs.count_item()
     prefix_str = strs[0]
@@ -32,6 +33,7 @@ def longest_common_prefix(var strs, var ret_common_prefix)
     for (i = 0, i < strs_max, i += 1) {
         var item
         var item_size
+        var str_array[1]
 
         item = strs[i]
         item_size = item.count_item()
@@ -40,6 +42,8 @@ def longest_common_prefix(var strs, var ret_common_prefix)
         if (item_size < prefix_str.count_item()){
             prefix_str = strs[i]
         }
+        string_to_array(item, str_array)
+        strs_array_hash.add_key_item(i, str_array)
     }
     print("prefix_str", prefix_str, "prefix_str_size", prefix_str.count_item())
 
@@ -47,10 +51,10 @@ def longest_common_prefix(var strs, var ret_common_prefix)
 
     for (i = 0, i < prefix_array.count_item(), i += 1) {
         for (j = 0, j < strs_max, j += 1) {
-            var ret_str_array[1]
+            var str_array
 
-            string_to_array(strs[j], ret_str_array)
-            if (ret_str_array[i] != prefix_array[i]){
+            str_array = strs_array_hash.find_item(j)
+            if (str_array[i] != prefix_array[i]){
                 var k
 
                 for (k = 0, k < prefix_array.count_item(), k += 1) {
