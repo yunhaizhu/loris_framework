@@ -115,6 +115,22 @@ STD_CALL static inline std_void_t inline_handle_line_comment(lang_state_t *state
 }
 
 /**
+ * inline_handle_multiple_line_comment
+ * @brief
+ * @param   state
+ * @return  STD_CALL static inline std_void_t
+ */
+STD_CALL static inline std_void_t inline_handle_multiple_line_comment(lang_state_t *state)
+{
+    while (state->lex_char != EOF && state->lex_char != '*') {
+        lang_lex_next(state);
+    }
+    lang_lex_expect(state, '*');
+    lang_lex_expect(state, '/');
+    lang_lex_expect(state, '\n');
+}
+
+/**
  * char_to_dec
  * @brief   
  * @param   c
@@ -540,6 +556,8 @@ STD_CALL static inline std_int_t lex_handle_char(lang_state_t *state)
  */
 STD_CALL std_int_t lang_lex_token(lang_state_t *state)
 {
+    std_int_t ret;
+
     while (true) {
 
         while (state->lex_char == ' ' || state->lex_char == '\t') {
@@ -559,7 +577,14 @@ STD_CALL std_int_t lang_lex_token(lang_state_t *state)
             return inline_handle_digit(state);
         }
 
-        return lex_handle_char(state);
+        ret = lex_handle_char(state);
+
+        if (lang_lex_accept(state, '/') && lang_lex_accept(state, '*')){
+            inline_handle_multiple_line_comment(state);
+            continue;
+        }
+
+        return ret;
     }
 }
 
