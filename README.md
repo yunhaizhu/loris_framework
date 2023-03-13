@@ -83,6 +83,7 @@ https://github.com/yunhaizhu/loris_framework_mips
 5. script("leetcode/13_roman_to_int.nl")
 6. script("leetcode/13_roman_to_int_2.nl")
 7. script("leetcode/2_add_two_number.nl")
+8. script("leetcode/14_longest_common_prefix.nl")
 
 ## COPYRIGHT
 GNU General Public License, version 3

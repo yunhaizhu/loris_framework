@@ -1,5 +1,5 @@
 
-def test_make_array()
+def test_string_to_array()
 {
     var string = "HELLO WORLD"
     var ret_array[3]
@@ -8,7 +8,7 @@ def test_make_array()
 
     max = ret_array.count_item()
     print(max)
-    make_array(string, ret_array)
+    string_to_array(string, ret_array)
 
     max = ret_array.count_item()
     print(max)

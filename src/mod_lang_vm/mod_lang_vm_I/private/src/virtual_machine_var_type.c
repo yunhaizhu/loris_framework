@@ -62,6 +62,33 @@ STD_CALL own_value_t get_VAR_with_var_type(IN const ownership_object_symbol_t *s
 }
 
 /**
+ * get_VAR_total_with_var_type
+ * @brief
+ * @param   variable
+ * @param   read_write
+ * @return  STD_CALL object_t *
+ */
+STD_CALL std_int_t get_VAR_total_with_var_type(IN const ownership_object_symbol_t *symbol)
+{
+    own_value_t var;
+    own_value_type_t value_type;
+    std_int_t size = 0;
+
+    var = inline_get_var(symbol);
+    value_type = get_own_value_type(var);
+
+    if (value_type == OWN_TYPE_OBJECT_STRING){
+        std_char_t const *string_string = NULL;
+        string_string = get_own_value_object_string(var);
+        if (string_string){
+            size = strlen(string_string);
+        }
+    }
+
+    return size;
+}
+
+/**
  * set_VAR_with_var_type
  * @brief
  * @param   variable

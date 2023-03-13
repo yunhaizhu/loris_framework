@@ -27,6 +27,15 @@
 STD_CALL own_value_t get_VAR_with_var_type(IN const ownership_object_symbol_t *symbol);
 
 /**
+ * get_VAR_total_with_var_type
+ * @brief
+ * @param   variable
+ * @param   read_write
+ * @return  STD_CALL object_t *
+ */
+STD_CALL std_int_t get_VAR_total_with_var_type(IN const ownership_object_symbol_t *symbol);
+
+/**
  * set_VAR_with_var_type
  * @brief   
  * @param   symbol

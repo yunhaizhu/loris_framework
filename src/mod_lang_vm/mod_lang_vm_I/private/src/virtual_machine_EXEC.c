@@ -16,6 +16,7 @@
 #include "virtual_machine_object.h"
 #include "virtual_machine_safe_var.h"
 
+
 extern environment_vm_t vm[128];
 
 /**
@@ -1048,8 +1049,17 @@ STD_CALL static inline std_void_t inline_execute_code_COUNT_ITEM(IN std_int_t th
     }
 
     if (get_own_value_object_symbol(object)->env_value.symbol_type == var_type) {
+        own_value_type_t value_type;
+
         object_item = get_VAR(object, NAN_BOX_Null, STD_BOOL_FALSE);
         STD_ASSERT_RV(object_item != NAN_BOX_Null, );
+
+        value_type = get_own_value_type(object_item);
+        if (value_type == OWN_TYPE_OBJECT_STRING) {
+            ret = make_own_value_number(get_VAR_total_with_var_type(get_own_value_object_symbol(object)));
+            Push(thread_id, ret);
+            return;
+        }
     } else {
         object_item = object;
     }
