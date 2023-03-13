@@ -80,7 +80,9 @@ STD_CALL static inline std_void_t inline_set_VAR_with_var_type(IN ownership_obje
     root_value_type = get_own_value_type(root_value);
 
     if (root_value_type == OWN_TYPE_OBJECT_SYMBOL) {
-        set_VAR(root_value, NAN_BOX_Null, value);
+        if (set_VAR(root_value, NAN_BOX_Null, value) != STD_RV_SUC){
+            set_VAR_with_var_type(root_symbol, value, STD_BOOL_FALSE, STD_BOOL_TRUE);
+        }
     } else {
         set_VAR_with_var_type(root_symbol, value, STD_BOOL_FALSE, STD_BOOL_TRUE);
     }
@@ -95,7 +97,7 @@ STD_CALL static inline std_void_t inline_set_VAR_with_var_type(IN ownership_obje
  * @param   value
  * @return  STD_CALL std_void_t
  */
-STD_CALL std_void_t set_VAR(own_value_t root, own_value_t index_key, own_value_t value)
+STD_CALL std_rv_t set_VAR(own_value_t root, own_value_t index_key, own_value_t value)
 {
     std_int_t idx = 0;
     ownership_object_symbol_t *root_symbol;
@@ -125,13 +127,18 @@ STD_CALL std_void_t set_VAR(own_value_t root, own_value_t index_key, own_value_t
         case hash_type:
             if (index_key != NAN_BOX_Null && get_own_value_type(index_key) == OWN_TYPE_OBJECT_SYMBOL) {
                 index_key = get_VAR(index_key, NAN_BOX_Null, STD_BOOL_FALSE);
+            }else if (index_key == NAN_BOX_Null){
+                return STD_RV_ERR_FAIL;
+            }else {
+                add_VAR_with_hash_type(root_symbol, index_key, value, STD_BOOL_TRUE);
             }
-            add_VAR_with_hash_type(root_symbol, index_key, value, STD_BOOL_TRUE);
+
             break;
 
         default:
             break;
     }
+    return STD_RV_SUC;
 }
 
 

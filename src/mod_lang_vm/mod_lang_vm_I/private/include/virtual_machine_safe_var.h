@@ -45,7 +45,7 @@ STD_CALL std_void_t declare_VAR(ownership_object_symbol_t *symbol, symbol_type_t
  * @param   value
  * @return  STD_CALL std_void_t
  */
-STD_CALL std_void_t set_VAR(own_value_t root, own_value_t index_key, own_value_t value);
+STD_CALL std_rv_t set_VAR(own_value_t root, own_value_t index_key, own_value_t value);
 
 /**
  * get_VAR
