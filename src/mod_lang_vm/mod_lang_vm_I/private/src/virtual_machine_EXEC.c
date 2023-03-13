@@ -447,6 +447,16 @@ STD_CALL static inline std_void_t inline_execute_code_AND(IN std_int_t thread_id
     own_value_t obj_x_value = Pop(thread_id);
     own_value_t ret;
 
+    if (obj_x_value == NAN_BOX_True){
+        obj_x_value = make_own_value_number(1);
+    }else if (obj_x_value == NAN_BOX_False){
+        obj_x_value = make_own_value_number(0);
+    }
+    if (obj_y_value == NAN_BOX_True){
+        obj_y_value = make_own_value_number(1);
+    }else if (obj_y_value == NAN_BOX_False){
+        obj_y_value = make_own_value_number(0);
+    }
     ret = make_own_value_bool(get_own_value_number(obj_x_value) && get_own_value_number(obj_y_value));
 
     Push(thread_id, (intptr_t) ret);
@@ -465,6 +475,16 @@ STD_CALL static inline std_void_t inline_execute_code_OR(IN std_int_t thread_id)
     own_value_t obj_x_value = Pop(thread_id);
     own_value_t ret;
 
+    if (obj_x_value == NAN_BOX_True){
+        obj_x_value = make_own_value_number(1);
+    }else if (obj_x_value == NAN_BOX_False){
+        obj_x_value = make_own_value_number(0);
+    }
+    if (obj_y_value == NAN_BOX_True){
+        obj_y_value = make_own_value_number(1);
+    }else if (obj_y_value == NAN_BOX_False){
+        obj_y_value = make_own_value_number(0);
+    }
     ret = make_own_value_bool(get_own_value_number(obj_x_value) || get_own_value_number(obj_y_value));
 
     Push(thread_id, (intptr_t) ret);

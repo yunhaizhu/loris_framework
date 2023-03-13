@@ -87,7 +87,7 @@ STD_CALL std_rv_t std_lock_free_key_hash_add(IN std_lock_free_key_hash_t *p_hash
     std_hazard_ptr_t *hp0;
 
     STD_ASSERT_RV(p_key != NULL, STD_RV_ERR_INVALIDARG);
-    STD_ASSERT_RV(p_value != NULL, STD_RV_ERR_INVALIDARG);
+//    STD_ASSERT_RV(p_value != NULL, STD_RV_ERR_INVALIDARG);
     STD_ASSERT_RV(p_hash != NULL, STD_RV_ERR_INVALIDARG);
 
     hash = std_full_name_hash(p_key, key_len, p_hash->hash_buckets);
