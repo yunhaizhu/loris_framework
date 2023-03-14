@@ -319,6 +319,7 @@ gen_code_table_t gen_code_table[] = {
         {"SET_ITEM", SET_ITEM},
         {"FIND_ITEM", FIND_ITEM},
         {"COUNT_ITEM", COUNT_ITEM},
+        {"RESIZE_ARRAY", RESIZE_ARRAY},
         {"LOAD_LIB", LOAD_LIB},
 
         {0, 0}};

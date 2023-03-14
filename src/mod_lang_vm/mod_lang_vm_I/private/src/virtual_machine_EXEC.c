@@ -1031,6 +1031,7 @@ STD_CALL static inline std_void_t inline_execute_code_FIND_ITEM(IN std_int_t thr
     }
 }
 
+
 /**
  * execute_code_COUNT_ITEM
  * @brief
@@ -1076,4 +1077,44 @@ STD_CALL static inline std_void_t inline_execute_code_COUNT_ITEM(IN std_int_t th
     }
 
     Push(thread_id, ret);
+}
+
+/**
+ * execute_code_FIND_ITEM
+ * @brief
+ * @param   Codes
+ * @param   Stack
+ * @param   Pc
+ * @param   Fp
+ * @return  STD_CALL static std_void_t
+ */
+STD_CALL static inline std_void_t inline_execute_code_RESIZE_ARRAY(IN std_int_t thread_id, const code_st *Codes, const std_u64_t *Stack, const std_int_t *Pc, const std_int_t *Fp)
+{
+    own_value_t object;
+    own_value_t object_item;
+    std_int_t new_size = 0;
+
+    if (Codes[*Pc].i_operand_ex) {
+        object = Stack[*Fp + Codes[*Pc].i_operand + 3];//LOAD A
+    } else {
+        object = Stack[*Fp - Codes[*Pc].i_operand];
+    }
+
+    if (get_own_value_object_symbol(object)->env_value.symbol_type == var_type) {
+        object_item = get_VAR(object, NAN_BOX_Null, STD_BOOL_FALSE);
+        STD_ASSERT_RV(object_item != NAN_BOX_Null, );
+    } else {
+        object_item = object;
+    }
+    STD_ASSERT_RV(get_own_value_object_symbol(object_item)->env_value.symbol_type == array_type, );
+
+    own_value_t obj_value = Pop(thread_id);
+
+    if (obj_value != NAN_BOX_Null) {
+        if (get_own_value_type(obj_value) == OWN_TYPE_OBJECT_SYMBOL) {
+            obj_value = get_VAR(obj_value, NAN_BOX_Null, STD_BOOL_FALSE);
+        }
+        new_size = (std_int_t) get_own_value_number(obj_value);
+    }
+    resize_VARS_with_array_type(get_own_value_object_symbol(object_item), new_size);
 }

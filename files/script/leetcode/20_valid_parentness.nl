@@ -61,10 +61,8 @@ def valid_parentness(var string, var ret_valid)
         }else {
             stack_is_empty(stack, ret_stack_empty)
             stack_pop(stack, ret_char_pop)
-#            print("ret_stack_empty", ret_stack_empty, "ret_char_pop:", ret_char_pop, "char:", char)
             if (ret_stack_empty == 99 or char != ret_char_pop){
                 ret_valid = 0
-#                print("NOT valid")
                 return
             }
         }

@@ -74,4 +74,14 @@ STD_CALL std_int_t del_VARS_with_array_type(IN ownership_object_symbol_t *symbol
  */
 STD_CALL std_int_t move_VAR_with_array_type(IN ownership_object_symbol_t *from_symbol, IN ownership_object_symbol_t *to_array);
 
+
+/**
+ * resize_VARS_with_array_type
+ * @brief
+ * @param   symbol
+ * @param   count
+ * @return  STD_CALL std_void_t
+ */
+STD_CALL std_void_t resize_VARS_with_array_type(IN ownership_object_symbol_t *symbol, IN std_int_t count);
+
 #endif

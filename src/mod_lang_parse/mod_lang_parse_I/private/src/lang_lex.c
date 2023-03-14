@@ -260,6 +260,7 @@ keyword_token_table_t keyword_token_table[] = {
         {"find_item", TOKEN_FIND_ITEM},
         {"count_item", TOKEN_COUNT_ITEM},
         {"add_key_item", TOKEN_ADD_KEY_ITEM},
+        {"resize", TOKEN_RESIZE},
         {"load_lib", TOKEN_LOAD_LIB},
         {"null", TOKEN_NULL},
         {"true", TOKEN_TRUE},
@@ -297,6 +298,7 @@ keyword_token_table_t token_name_table[] = {
         {"find_item", TOKEN_FIND_ITEM},
         {"count_item", TOKEN_COUNT_ITEM},
         {"add_key_item", TOKEN_ADD_KEY_ITEM},
+        {"resize", TOKEN_RESIZE},
         {"load_lib", TOKEN_LOAD_LIB},
 
         {"<=", TOKEN_BGE},

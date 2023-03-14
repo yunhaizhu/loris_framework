@@ -95,6 +95,7 @@ typedef enum vm_opcode_s {
     SET_ITEM,
     FIND_ITEM,
     COUNT_ITEM,
+    RESIZE_ARRAY,
 
     LOAD_LIB
 } vm_opcode_t;

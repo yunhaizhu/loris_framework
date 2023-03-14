@@ -358,6 +358,10 @@ STD_CALL std_void_t dump_codes(IN const std_char_t *name, IN std_int_t start_pc)
                 emit_c_codes("inline_execute_code_COUNT_ITEM(thread_id, Codes, Stack, Pc, Fp);\n");
                 break;
 
+            case RESIZE_ARRAY:
+                emit_c_codes("inline_execute_code_RESIZE_ARRAY(thread_id, Codes, Stack, Pc, Fp);\n");
+                break;
+
             default:
                 emit_c_codes("\n");
                 break;

@@ -85,6 +85,7 @@ typedef enum gen_opcode_s {
     SET_ITEM,
     FIND_ITEM,
     COUNT_ITEM,
+    RESIZE_ARRAY,
 
     LOAD_LIB
 } gen_opcode_t;

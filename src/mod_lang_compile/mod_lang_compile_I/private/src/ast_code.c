@@ -79,6 +79,7 @@ gen_code_table_t gen_code_table[] = {
         {"SET_ITEM", SET_ITEM},
         {"FIND_ITEM", FIND_ITEM},
         {"COUNT_ITEM", COUNT_ITEM},
+        {"RESIZE_ARRAY", RESIZE_ARRAY},
         {"LOAD_LIB", LOAD_LIB},
 
         {0, 0}};
@@ -257,6 +258,7 @@ STD_CALL std_char_t *gen_code_func(IN std_char_t *entry_name, IN std_int_t n_loc
             case GET_ITEM:
             case FIND_ITEM:
             case COUNT_ITEM:
+            case RESIZE_ARRAY:
             case SET_ITEM:
                 snprintf(buffer + buffer_index, BUF_SIZE_4096 - buffer_index, "%ld %d [%d]", gen_codes[i].operand, gen_codes[i].ex_operand, gen_codes[i].line);
                 buffer_index = std_safe_strlen(buffer, BUF_SIZE_4096);

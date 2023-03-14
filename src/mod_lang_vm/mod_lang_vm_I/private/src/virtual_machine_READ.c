@@ -404,6 +404,7 @@ STD_CALL std_rv_t read_code(IN const std_char_t *buffer)
             case SET_ITEM:
             case FIND_ITEM:
             case COUNT_ITEM:
+            case RESIZE_ARRAY:
                 STD_ASSERT_RV(read_code_EX(Codes, n_codes, line) == STD_RV_SUC, STD_RV_ERR_POINTER);
                 break;
 

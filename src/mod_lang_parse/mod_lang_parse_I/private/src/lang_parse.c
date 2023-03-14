@@ -446,7 +446,12 @@ lang_ast_t *call_expr(lang_state_t *state)
                 lang_expect(state, '(');
                 lang_expect(state, ')');
                 ret = make_lang_ast(COUNT_TUPLE_OP, ret, NULL, state->source_name, state->source_line);
-            } else if (lang_accept(state, TOKEN_GET)) {
+            } else if (lang_accept(state, TOKEN_RESIZE)) {
+                lang_expect(state, '(');
+                expr2 = arg_list(state);
+                lang_expect(state, ')');
+                ret = make_lang_ast(RESIZE_ARRAY_OP, ret, expr2, state->source_name, state->source_line);
+            }else if (lang_accept(state, TOKEN_GET)) {
                 lang_expect(state, '(');
                 lang_expect(state, ')');
                 ret = make_lang_ast(SAFE_GET_OP, ret, NULL, state->source_name, state->source_line);

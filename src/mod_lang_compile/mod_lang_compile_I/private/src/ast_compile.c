@@ -395,6 +395,34 @@ std_void_t compile_count_item_var(symbol_t *var, std_int_t line)
 }
 
 /**
+ * compile_add_item_var
+ * @brief
+ * @param   var
+ * @param   item_ast
+ * @return  std_void_t
+ */
+std_void_t compile_resize_var(symbol_t *var, lang_ast_t *item_ast, std_int_t line)
+{
+    std_int_t envp = global_gsl_rng_env[get_std_thread_id()].envp;
+    const Environment *Env = global_gsl_rng_env[get_std_thread_id()].Env;
+
+    for (std_int_t i = envp - 1; i >= 0; i--) {
+        if (Env[i].var == var && Env[i].var_kind == VAR_ARG) {
+            compile_expr(item_ast);
+            gen_codeI(RESIZE_ARRAY, Env[i].pos, 1, line);
+        } else if (Env[i].var == var && Env[i].var_kind == VAR_LOCAL) {
+            compile_expr(item_ast);
+            gen_codeI(RESIZE_ARRAY, Env[i].pos, 0, line);
+            return;
+        }
+    }
+
+    STD_LOG(ERR, "undefined variable '%s', please check line [%d]\n", var->name, line);
+    compile_error();
+}
+
+
+/**
  * compile_find_item_var
  * @brief   
  * @param   var
@@ -1273,6 +1301,11 @@ std_void_t compile_expr(lang_ast_t *p)
 
         case COUNT_TUPLE_OP:
             compile_count_item_var(get_lang_ast_symbol(p->left), p->debug_info.line);
+            return;
+
+        case RESIZE_ARRAY_OP:
+            item = get_lang_ast_nth(p->right, 0);
+            compile_resize_var(get_lang_ast_symbol(p->left), item, p->debug_info.line);
             return;
 
         case LOAD_LIB_OP:

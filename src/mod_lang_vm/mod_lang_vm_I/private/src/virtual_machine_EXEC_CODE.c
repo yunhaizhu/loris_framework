@@ -106,6 +106,7 @@ STD_CALL std_void_t execute_code(IN std_int_t start_pc, IN std_bool_t reset)
             &&OP_CODE_SET_ITEM,
             &&OP_CODE_FIND_ITEM,
             &&OP_CODE_COUNT_ITEM,
+            &&OP_CODE_RESIZE_ARRAY,
 
             &&OP_CODE_LOAD_LIB};
     goto *jump_table[Codes[*Pc].opcode];
@@ -323,6 +324,10 @@ OP_CODE_FIND_ITEM:
 
 OP_CODE_COUNT_ITEM:
     inline_execute_code_COUNT_ITEM(thread_id, Codes, Stack, Pc, Fp);
+    DISPATCH()
+
+OP_CODE_RESIZE_ARRAY:
+    inline_execute_code_RESIZE_ARRAY(thread_id, Codes, Stack, Pc, Fp);
     DISPATCH()
 
 OP_CODE_LOAD_LIB:

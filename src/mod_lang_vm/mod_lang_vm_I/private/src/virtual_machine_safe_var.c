@@ -66,7 +66,7 @@ STD_CALL std_void_t declare_VAR(ownership_object_symbol_t *symbol, symbol_type_t
  * @param   copy
  * @return  STD_CALL inline std_void_t
  */
-STD_CALL static inline std_void_t inline_set_VAR_with_var_type(IN ownership_object_symbol_t *root_symbol, IN own_value_t value)
+STD_CALL static inline std_void_t inline_set_VAR_with_var_type(IN ownership_object_symbol_t *root_symbol, own_value_t index_key, IN own_value_t value)
 {
     own_value_t root_value;
     own_value_type_t root_value_type;
@@ -80,7 +80,7 @@ STD_CALL static inline std_void_t inline_set_VAR_with_var_type(IN ownership_obje
     root_value_type = get_own_value_type(root_value);
 
     if (root_value_type == OWN_TYPE_OBJECT_SYMBOL) {
-        if (set_VAR(root_value, NAN_BOX_Null, value) != STD_RV_SUC){
+        if (set_VAR(root_value, index_key, value) != STD_RV_SUC){
             set_VAR_with_var_type(root_symbol, value, STD_BOOL_FALSE, STD_BOOL_TRUE);
         }
     } else {
@@ -106,7 +106,7 @@ STD_CALL std_rv_t set_VAR(own_value_t root, own_value_t index_key, own_value_t v
 
     switch (root_symbol->env_value.symbol_type) {
         case var_type:
-            inline_set_VAR_with_var_type(root_symbol, value);
+            inline_set_VAR_with_var_type(root_symbol, index_key, value);
             break;
 
         case array_type:

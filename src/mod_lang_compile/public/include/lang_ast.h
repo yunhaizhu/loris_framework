@@ -56,6 +56,7 @@ typedef enum lang_ast_code {
     DECLARE_ARRAY_OP,
     GET_TUPLE_OP,
     COUNT_TUPLE_OP,
+    RESIZE_ARRAY_OP,
     ADD_ITEM_OP,
     ADD_KEY_ITEM_OP,
     DEL_ITEM_OP,

@@ -50,6 +50,7 @@ typedef enum lex_token_s {
     TOKEN_FIND_ITEM,
     TOKEN_COUNT_ITEM,
     TOKEN_ADD_KEY_ITEM,
+    TOKEN_RESIZE,
     TOKEN_LOAD_LIB,
 
     TOKEN_BGE,
