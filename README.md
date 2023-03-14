@@ -89,6 +89,7 @@ https://github.com/yunhaizhu/loris_framework_mips
 9. script("leetcode/20_valid_parentness.nl")
 10. script("leetcode/21_merge_two_sorted_linked_list.nl")
 11. script("leetcode/35_search_insert_position.nl")
+12. script("leetcode/70_climb_stairs.nl")
 
 ## COPYRIGHT
 GNU General Public License, version 3
